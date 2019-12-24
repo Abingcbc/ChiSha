@@ -13,9 +13,6 @@ services:
   registry:
     image: abingcbc/chisha-registry
     restart: always
-    depends_on:
-      config:
-        condition: service_healthy
     ports:
       - 8888:8888
     networks:
@@ -28,9 +25,6 @@ services:
   gateway:
     image: abingcbc/chisha-gateway
     restart: always
-    depends_on:
-      config:
-        condition: service_healthy
     ports:
       - 8070:8070
     networks:
