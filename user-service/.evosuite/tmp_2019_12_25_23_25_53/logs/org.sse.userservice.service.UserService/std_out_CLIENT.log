@@ -1,0 +1,2 @@
+[MASTER] 23:30:56.488 [pool-2-thread-1] WARN  TestSuiteSerialization - Cannot load tests because file does not exist: /Users/cbc/Project/Java/ChiSha/user-service/.evosuite/evosuite-seeds/org.sse.userservice.service.UserService.seed
+[MASTER] 23:30:59.963 [pool-2-thread-1] WARN  TestChromosome - Functional mock problem: org.evosuite.ga.ConstructionFailedException: Have no generator for interface org.sse.userservice.mapper.UserMapper canUseFunctionalMocks=false, canBeMocked: true

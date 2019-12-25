@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.sse.userservice.mapper.UserMapper;
+import org.sse.userservice.model.Result;
 import org.sse.userservice.model.User;
 
 /**
@@ -20,71 +21,35 @@ public class UserService {
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public int register(String username, String password, String email, String avatarUrl) {
-        if (userMapper.getUserByUsername(username) != null) {
-            return 0;
+    public Result login(User user) {
+        User userDB = userMapper.getUserByEmail(user.getPhone());
+        if ( userDB == null) {
+            return new Result(0, "No such user");
+        }
+        if (userDB.getPassword() != passwordEncoder.encode(user.getPassword())) {
+            return new Result(0, "Wrong password");
         } else {
-            password = passwordEncoder.encode(password);
-            if (avatarUrl == null) {
-                avatarUrl = "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png";
-            }
-            if (userMapper.createNewUser(username, password, email, avatarUrl) == 1) {
-                return 1;
+            return new Result(1, "Success");
+        }
+    }
+
+    public Result register(User user) {
+        if (userMapper.getUserByEmail(user.getPhone()) != null) {
+            return new Result(0, "Phone registered");
+        } else {
+            String password = passwordEncoder.encode(user.getPassword());
+            if (userMapper.createNewUser(user) == 1) {
+                return new Result(1, "Success");
             } else {
-                return -1;
+                return new Result(0, "Register fail");
             }
         }
     }
 
     public User getUserInfoWithoutPassword(String username) {
-        return userMapper.getUserByUsername(username);
-    }
-
-    /**
-     * update user's information
-     * @param username new username
-     * @param oPassword origin password
-     * @param password new password
-     * @param email email
-     * @param avatarUrl avatar url
-     * @return -1: No such user
-     *         -2: Update password failed
-     *         -3: Origin password wrong
-     *         -4: Update email failed
-     *         -5: Update avatar failed
-     *         1: success
-     */
-    public int updateInfo(String username,
-                          String oPassword,
-                          String password,
-                          String email,
-                          String avatarUrl) {
-        if (userMapper.getUserByUsername(username) == null) {
-            return -1;
-        }
-        // no password update
-        if (oPassword != null) {
-            if (userMapper.getUserByUsername(username).getPassword()
-                    .equals(passwordEncoder.encode(oPassword))) {
-                if (userMapper.updatePassword(username,
-                        passwordEncoder.encode(password)) != 1) {
-                    return -2;
-                }
-            } else {
-                return -3;
-            }
-        }
-        if (email != null) {
-            if (userMapper.updateEmail(username, email) != 1) {
-                return -4;
-            }
-        }
-        if (avatarUrl != null) {
-            if (userMapper.updateAvatar(username, avatarUrl) != 1) {
-                return -5;
-            }
-        }
-        return 1;
+        User user = userMapper.getUserByEmail(username);
+        user.setPassword(null);
+        return user;
     }
 
 }
