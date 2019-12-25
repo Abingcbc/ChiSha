@@ -33,3 +33,15 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
+
+  user-service:
+    image: abingcbc/chisha-user-service
+    restart: always
+    ports:
+      - 8888:8888
+    networks:
+      - host
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
