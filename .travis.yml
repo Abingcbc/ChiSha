@@ -35,7 +35,7 @@ after_success:
   - docker push $GATEWAY
 
   # USER-SERVICE
-  - export USER-SERVICE=abingcbc/chisha-user-service
-  - docker build -t $USER-SERVICE:$COMMIT ./user-service
-  - docker tag $USER-SERVICE:$COMMIT $USER-SERVICE:$TAG
-  - docker push $USER-SERVICE
+  - export USER_SERVICE=abingcbc/chisha-user-service
+  - docker build -t $USER_SERVICE:$COMMIT ./user-service
+  - docker tag $USER_SERVICE:$COMMIT $USER_SERVICE:$TAG
+  - docker push $USER_SERVICE

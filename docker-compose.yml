@@ -38,7 +38,7 @@ services:
     image: abingcbc/chisha-user-service
     restart: always
     ports:
-      - 8888:8888
+      - 8001:8001
     networks:
       - host
     logging:
