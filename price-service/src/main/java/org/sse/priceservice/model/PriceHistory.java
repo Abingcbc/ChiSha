@@ -1,6 +1,11 @@
-package com.sample;
+package org.sse.priceservice.model;
 
+import lombok.Data;
 
+/**
+ * @author HPY
+ */
+@Data
 public class PriceHistory {
 
   private long priceHistoryId;
