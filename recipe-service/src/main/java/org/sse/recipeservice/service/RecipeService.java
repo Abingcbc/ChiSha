@@ -21,7 +21,18 @@ public class RecipeService {
     public PageInfo<Recipe> getPageOfRecipeByDefault(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         List<Recipe> list = recipeMapper.getPageOfRecipe();
-//        List<Recipe> list = recipeMapper.getPageOfRecipe();
         return new PageInfo<>(list);
+    }
+
+    public PageInfo<Recipe> getPageOfRecipeByKeyword(String keyword, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Recipe> recipeList = recipeMapper.getRecipeByKeyword("%" + keyword +"%");
+        return new PageInfo<>(recipeList);
+    }
+
+    public PageInfo<Recipe> getPageOfRecipeByStyle(int styleId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Recipe> recipeList = recipeMapper.getRecipeByStyle(styleId);
+        return new PageInfo<>(recipeList);
     }
 }
