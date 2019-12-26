@@ -14,5 +14,5 @@ import java.util.List;
 public interface RecommendMapper {
 
 
-    List<TrainData> getTrainDataByUserID()
+    List<TrainData> getTrainDataByUserID();
 }
