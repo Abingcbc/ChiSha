@@ -1,17 +1,16 @@
 package org.sse.recommendservice.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author cbc
+ * @author HPY
  */
 @RestController
-public class RecommendController {
-    @GetMapping("/hellow")
+public class HelloController {
+    @GetMapping("/helloo")
     public String sayHello(){
-        return "helloddddddd";
+        return "hello";
     }
 }
