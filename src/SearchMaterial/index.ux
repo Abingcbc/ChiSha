@@ -1,0 +1,54 @@
+<import name="my-search-bar" src="apex-ui/components/search-bar/index"></import>
+<template>
+    <div class="page">
+      <div style="flex-direction: row;">
+        <div style="width:80%">
+            <my-search-bar onchange="bindSearch" cancel-text="X" placeholder="搜索食材名"></my-search-bar>
+        </div>
+        <text ontouchend="search" class="button_text">搜索</text>
+      </div>
+      <list class="tutorial-page">
+        <block for="{{result_list}}">
+          <list-item type="card" class="tutorial-page">
+            <my-card title="{{$item.name}}" thumb="{{$item.url}}" extra="今日价格：￥{{$item.price}}">
+              <text>{{search_text}}</text>
+            </my-card>
+          </list-item>
+        </block> 
+      </list>
+    </div>
+</template>
+<style>
+     .button_text {
+      margin-left: 20px;
+        font-size: 30px;
+        color: #80848f;
+    }
+    .page {
+         flex-direction: column;
+    }
+    .tutorial-page {
+      width: 100%;
+      flex-direction: column;
+      background-color: #f8f8f9;
+    }
+    .background {
+      background-color: #f8f8f9;
+      flex-direction: column;
+    }
+</style>
+<script>
+export default {
+  private: {
+    search_text:'',
+    test_list:[1,2,3,4,5,6,7],
+    result_list:[]
+  },
+  bindSearch(e){
+    this.search_text=e.detail.event.value
+  },
+  search() {
+
+  }
+}
+</script>

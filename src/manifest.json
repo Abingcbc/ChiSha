@@ -1,0 +1,100 @@
+{
+  "package": "org.sse.whattoeat",
+  "name": "what-to-eat",
+  "versionName": "1.0.0",
+  "versionCode": "1",
+  "minPlatformVersion": "1020",
+  "icon": "/Common/logo.png",
+  "features": [
+    {
+      "name": "system.prompt"
+    },
+    {
+      "name": "system.router"
+    },
+    {
+      "name": "system.shortcut"
+    }
+  ],
+  "permissions": [
+    {
+      "origin": "*"
+    }
+  ],
+  "config": {
+    "logLevel": "off"
+  },
+  "router": {
+    "entry": "Login",
+    "pages": {
+      "Price": {
+        "component": "index"
+      },
+      "Advertisement": {
+        "component": "index"
+      },
+      "Menu": {
+        "component": "index"
+      },
+      "UserInfo": {
+        "component": "index"
+      },
+      "Search": {
+        "component": "index"
+      },
+      "Login": {
+        "component": "index"
+      },
+      "Register": {
+        "component": "index"
+      },
+      "SearchMaterial": {
+        "component": "index"
+      }
+    },
+    "widgets": {
+      "CardDemo": {
+        "name": "CardDemo",
+        "description": "快应用卡片展示",
+        "component": "index",
+        "path": "/CardDemo",
+        "minPlatformVersion": 1032,
+        "targetManufactorys": [
+          "vivo"
+        ],
+        "features": []
+      }
+    }
+  },
+  "display": {
+    "titleBarBackgroundColor": "#ffffff",
+    "titleBarTextColor": "#414141",
+    "titleBar": false,
+    "pages": {
+      "Search": {
+        "titleBar": true,
+        "titleBarText": "搜索",
+        "titleBarBackgroundColor":"#09ba07",
+        "titleBarTextColor":"#ffffff"
+      },
+      "Login": {
+        "titleBar": true,
+        "titleBarText": "登陆",
+        "titleBarBackgroundColor":"#09ba07",
+        "titleBarTextColor":"#ffffff"
+      },
+      "Register": {
+        "titleBar": true,
+        "titleBarText": "注册",
+        "titleBarBackgroundColor":"#09ba07",
+        "titleBarTextColor":"#ffffff"
+      },
+      "SearchMaterial": {
+        "titleBar": true,
+        "titleBarText": "搜索",
+        "titleBarBackgroundColor":"#09ba07",
+        "titleBarTextColor":"#ffffff"
+      }
+    }
+  }
+}
