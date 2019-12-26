@@ -2,12 +2,12 @@ package org.sse.recipeservice.controller;
 
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.sse.recipeservice.dto.SearchDTO;
 import org.sse.recipeservice.model.Recipe;
 import org.sse.recipeservice.service.RecipeService;
+
+import javax.websocket.server.PathParam;
 
 
 /**
@@ -25,8 +25,20 @@ public class RecipeController {
         return recipeService.getPageOfRecipeByDefault(pageNum, pageSize);
     }
 
-//    @GetMapping("/hello")
-//    public String getPageOfRecipe(){
-//        return "hellooo";
-//    }
+    @PostMapping("/search")
+    public PageInfo<Recipe> searchRecipeByKeyword(@RequestBody SearchDTO searchDTO,
+                                                  @RequestParam("page-num") int pageNum,
+                                                  @RequestParam("page-size") int pageSize){
+        return recipeService.getPageOfRecipeByKeyword(searchDTO.getKeyword(), pageNum, pageSize);
+
+    }
+
+    @GetMapping("/get-list-by-style/{styleId}")
+    public PageInfo<Recipe> getPageOfRecipeByStyle(@PathVariable("styleId") int styleId,
+                                                   @RequestParam("page-num") int pageNum,
+                                                   @RequestParam("page-size") int pageSize){
+        return recipeService.getPageOfRecipeByStyle(styleId, pageNum, pageSize);
+
+    }
+
 }
