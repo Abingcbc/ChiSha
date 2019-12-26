@@ -9,16 +9,16 @@
             <failed>false</failed>
             <modified>true</modified>
             <timeBudgetInSeconds>128</timeBudgetInSeconds>
-            <memoryInMB>800</memoryInMB>
-            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.model.Result/std_err_CLIENT.log</std_err_CLIENT>
-            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.model.Result/std_out_CLIENT.log</std_out_CLIENT>
-            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.model.Result/std_err_MASTER.log</std_err_MASTER>
-            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.model.Result/std_out_MASTER.log</std_out_MASTER>
+            <memoryInMB>1000</memoryInMB>
+            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.model.Result/std_err_CLIENT.log</std_err_CLIENT>
+            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.model.Result/std_out_CLIENT.log</std_out_CLIENT>
+            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.model.Result/std_err_MASTER.log</std_err_MASTER>
+            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.model.Result/std_out_MASTER.log</std_out_MASTER>
             <suite>
-                <fullPathOfTestSuite>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/tests/org/sse/userservice/model/Result_ESTest.java</fullPathOfTestSuite>
+                <fullPathOfTestSuite>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/tests/org/sse/userservice/model/Result_ESTest.java</fullPathOfTestSuite>
                 <numberOfTests>19</numberOfTests>
-                <totalNumberOfStatements>46</totalNumberOfStatements>
-                <totalEffortInSeconds>78</totalEffortInSeconds>
+                <totalNumberOfStatements>51</totalNumberOfStatements>
+                <totalEffortInSeconds>82</totalEffortInSeconds>
                 <coverage>
                     <criterion>LineCoverage</criterion>
                     <coverageValue>1.0</coverageValue>
@@ -70,15 +70,15 @@
             <failed>false</failed>
             <modified>true</modified>
             <timeBudgetInSeconds>94</timeBudgetInSeconds>
-            <memoryInMB>800</memoryInMB>
-            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.service.UserService/std_err_CLIENT.log</std_err_CLIENT>
-            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.service.UserService/std_out_CLIENT.log</std_out_CLIENT>
-            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.service.UserService/std_err_MASTER.log</std_err_MASTER>
-            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.service.UserService/std_out_MASTER.log</std_out_MASTER>
+            <memoryInMB>1000</memoryInMB>
+            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.service.UserService/std_err_CLIENT.log</std_err_CLIENT>
+            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.service.UserService/std_out_CLIENT.log</std_out_CLIENT>
+            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.service.UserService/std_err_MASTER.log</std_err_MASTER>
+            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.service.UserService/std_out_MASTER.log</std_out_MASTER>
             <suite>
-                <fullPathOfTestSuite>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/tests/org/sse/userservice/service/UserService_ESTest.java</fullPathOfTestSuite>
-                <numberOfTests>10</numberOfTests>
-                <totalNumberOfStatements>102</totalNumberOfStatements>
+                <fullPathOfTestSuite>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/tests/org/sse/userservice/service/UserService_ESTest.java</fullPathOfTestSuite>
+                <numberOfTests>7</numberOfTests>
+                <totalNumberOfStatements>57</totalNumberOfStatements>
                 <totalEffortInSeconds>59</totalEffortInSeconds>
                 <coverage>
                     <criterion>LineCoverage</criterion>
@@ -102,8 +102,8 @@
                 </coverage>
                 <coverage>
                     <criterion>OutputCoverage</criterion>
-                    <coverageValue>0.61</coverageValue>
-                    <coverageBitString>111111111000100010</coverageBitString>
+                    <coverageValue>0.11</coverageValue>
+                    <coverageBitString>000000000000100010</coverageBitString>
                 </coverage>
                 <coverage>
                     <criterion>MethodCoverage</criterion>
@@ -131,16 +131,16 @@
             <failed>false</failed>
             <modified>true</modified>
             <timeBudgetInSeconds>60</timeBudgetInSeconds>
-            <memoryInMB>800</memoryInMB>
-            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.config.SwaggerConfig/std_err_CLIENT.log</std_err_CLIENT>
-            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.config.SwaggerConfig/std_out_CLIENT.log</std_out_CLIENT>
-            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.config.SwaggerConfig/std_err_MASTER.log</std_err_MASTER>
-            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.config.SwaggerConfig/std_out_MASTER.log</std_out_MASTER>
+            <memoryInMB>1000</memoryInMB>
+            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.config.SwaggerConfig/std_err_CLIENT.log</std_err_CLIENT>
+            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.config.SwaggerConfig/std_out_CLIENT.log</std_out_CLIENT>
+            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.config.SwaggerConfig/std_err_MASTER.log</std_err_MASTER>
+            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.config.SwaggerConfig/std_out_MASTER.log</std_out_MASTER>
             <suite>
-                <fullPathOfTestSuite>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/tests/org/sse/userservice/config/SwaggerConfig_ESTest.java</fullPathOfTestSuite>
+                <fullPathOfTestSuite>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/tests/org/sse/userservice/config/SwaggerConfig_ESTest.java</fullPathOfTestSuite>
                 <numberOfTests>1</numberOfTests>
                 <totalNumberOfStatements>2</totalNumberOfStatements>
-                <totalEffortInSeconds>36</totalEffortInSeconds>
+                <totalEffortInSeconds>39</totalEffortInSeconds>
                 <coverage>
                     <criterion>LineCoverage</criterion>
                     <coverageValue>1.0</coverageValue>
@@ -192,16 +192,16 @@
             <failed>false</failed>
             <modified>true</modified>
             <timeBudgetInSeconds>317</timeBudgetInSeconds>
-            <memoryInMB>800</memoryInMB>
-            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.model.User/std_err_CLIENT.log</std_err_CLIENT>
-            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.model.User/std_out_CLIENT.log</std_out_CLIENT>
-            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.model.User/std_err_MASTER.log</std_err_MASTER>
-            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.model.User/std_out_MASTER.log</std_out_MASTER>
+            <memoryInMB>1000</memoryInMB>
+            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.model.User/std_err_CLIENT.log</std_err_CLIENT>
+            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.model.User/std_out_CLIENT.log</std_out_CLIENT>
+            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.model.User/std_err_MASTER.log</std_err_MASTER>
+            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.model.User/std_out_MASTER.log</std_out_MASTER>
             <suite>
-                <fullPathOfTestSuite>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/tests/org/sse/userservice/model/User_ESTest.java</fullPathOfTestSuite>
-                <numberOfTests>59</numberOfTests>
-                <totalNumberOfStatements>197</totalNumberOfStatements>
-                <totalEffortInSeconds>198</totalEffortInSeconds>
+                <fullPathOfTestSuite>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/tests/org/sse/userservice/model/User_ESTest.java</fullPathOfTestSuite>
+                <numberOfTests>58</numberOfTests>
+                <totalNumberOfStatements>195</totalNumberOfStatements>
+                <totalEffortInSeconds>199</totalEffortInSeconds>
                 <coverage>
                     <criterion>LineCoverage</criterion>
                     <coverageValue>1.0</coverageValue>
@@ -253,11 +253,11 @@
             <failed>true</failed>
             <modified>true</modified>
             <timeBudgetInSeconds>60</timeBudgetInSeconds>
-            <memoryInMB>800</memoryInMB>
-            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.UserServiceApplication/std_err_CLIENT.log</std_err_CLIENT>
-            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.UserServiceApplication/std_out_CLIENT.log</std_out_CLIENT>
-            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.UserServiceApplication/std_err_MASTER.log</std_err_MASTER>
-            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.UserServiceApplication/std_out_MASTER.log</std_out_MASTER>
+            <memoryInMB>1000</memoryInMB>
+            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.UserServiceApplication/std_err_CLIENT.log</std_err_CLIENT>
+            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.UserServiceApplication/std_out_CLIENT.log</std_out_CLIENT>
+            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.UserServiceApplication/std_err_MASTER.log</std_err_MASTER>
+            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.UserServiceApplication/std_out_MASTER.log</std_out_MASTER>
         </generation>
     </cut>
     <cut>
@@ -268,16 +268,16 @@
             <failed>false</failed>
             <modified>true</modified>
             <timeBudgetInSeconds>60</timeBudgetInSeconds>
-            <memoryInMB>800</memoryInMB>
-            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.controller.UserController/std_err_CLIENT.log</std_err_CLIENT>
-            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.controller.UserController/std_out_CLIENT.log</std_out_CLIENT>
-            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.controller.UserController/std_err_MASTER.log</std_err_MASTER>
-            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/logs/org.sse.userservice.controller.UserController/std_out_MASTER.log</std_out_MASTER>
+            <memoryInMB>1000</memoryInMB>
+            <std_err_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.controller.UserController/std_err_CLIENT.log</std_err_CLIENT>
+            <std_out_CLIENT>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.controller.UserController/std_out_CLIENT.log</std_out_CLIENT>
+            <std_err_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.controller.UserController/std_err_MASTER.log</std_err_MASTER>
+            <std_out_MASTER>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/logs/org.sse.userservice.controller.UserController/std_out_MASTER.log</std_out_MASTER>
             <suite>
-                <fullPathOfTestSuite>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_25_23_25_53/tests/org/sse/userservice/controller/UserController_ESTest.java</fullPathOfTestSuite>
+                <fullPathOfTestSuite>/Users/cbc/Project/Java/ChiSha/user-service/.evosuite/tmp_2019_12_26_10_52_41/tests/org/sse/userservice/controller/UserController_ESTest.java</fullPathOfTestSuite>
                 <numberOfTests>3</numberOfTests>
                 <totalNumberOfStatements>15</totalNumberOfStatements>
-                <totalEffortInSeconds>35</totalEffortInSeconds>
+                <totalEffortInSeconds>36</totalEffortInSeconds>
                 <coverage>
                     <criterion>LineCoverage</criterion>
                     <coverageValue>1.0</coverageValue>

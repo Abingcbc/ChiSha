@@ -1,1 +1,0 @@
-[MASTER] 23:29:29.758 [pool-2-thread-1] WARN  TestSuiteSerialization - Cannot load tests because file does not exist: /Users/cbc/Project/Java/ChiSha/user-service/.evosuite/evosuite-seeds/org.sse.userservice.model.Result.seed
