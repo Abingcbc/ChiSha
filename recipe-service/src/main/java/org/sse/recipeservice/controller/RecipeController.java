@@ -3,6 +3,7 @@ package org.sse.recipeservice.controller;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.sse.recipeservice.dto.RecipeDTO;
 import org.sse.recipeservice.dto.SearchDTO;
 import org.sse.recipeservice.model.Recipe;
 import org.sse.recipeservice.service.RecipeService;
@@ -39,6 +40,11 @@ public class RecipeController {
                                                    @RequestParam("page-size") int pageSize){
         return recipeService.getPageOfRecipeByStyle(styleId, pageNum, pageSize);
 
+    }
+
+    @GetMapping("/get-info/{recipeId}")
+    public RecipeDTO getDetailOfRecipeById(@PathVariable("recipeId") long recipeId){
+        return recipeService.getDetailOfRecipeById(recipeId);
     }
 
 }
