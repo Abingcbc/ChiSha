@@ -1,6 +1,5 @@
 package org.sse.recommendservice.controller;
 
-import com.oracle.tools.packager.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
