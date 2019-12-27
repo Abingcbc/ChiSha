@@ -7,6 +7,9 @@ services:
 language: java
 jdk: oraclejdk8
 
+branches:
+  only:
+    - master
 env:
   global:
     - secure: "53wVXTm2nKnkEmyeW93BMyqhTmht6oBGRKdIEi/zMPoZPTp2c4MF42csaxTiLfX2A0LxTQtL7Y+chkA5J+YtpioFMUt+25h8d0jHdLautQXpuDcKZx/+74FkwylRKg4OrPbELYp1oDDN5ErqgFuiGHQmLeanB/kQMspdKvrF4uDCAXSseQLoRitkGMeA6nOaRZ9g5Ip3n4//dVD7tYT5wZIU6eGECOSLi3pGIW1kCcvrli9guZxr0yo/QGngnHoCPGZ+DeGrjABYrfIacmBEdW3Jt19wDUTZ1UPQZJqwcXt+zXaUkq135/xlgGwwsTc2F0/99YZ+ULRRhPPlA7aiACcDn1K0figyYEDSzuS8MFR8N0Uhohu/S/6e37264WbPwNRpCh8oWG1AMhaWd+AIH7n7tLNjN3PkGXn6dntJG/3ifnOjkQy5nQWGFDbXZA7Ru36ZfWvpeu9QRYp+quLgqsRtPtmx2WILqSAxz3gNetDicigRcG6gQ0wvuj2redSFnCx7EsXgIKrUWSx38mETt7AP2XVcDMcM9rLPYH9b7ickDm0MCCs3WlS6/OgT7kRDKaLmSSYLMCMp1toKzvUEIsR4qYZEXL5QzSBEAESA6kxbfNJCEZpMlCTbusLTN/vtbRQvMd09paKIScGels0spgcXoEgRi5NZbB+L7rJADy4="

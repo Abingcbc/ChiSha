@@ -1,6 +1,12 @@
-package com.sample;
+package org.sse.priceservice.model;
 
 
+import lombok.Data;
+
+/**
+ * @author HPY
+ */
+@Data
 public class Taste {
 
   private long tasteId;
