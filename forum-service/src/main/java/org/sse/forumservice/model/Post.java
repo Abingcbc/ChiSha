@@ -1,4 +1,4 @@
-package com.sample;
+package org.sse.forumservice.model;
 
 
 public class Post {
