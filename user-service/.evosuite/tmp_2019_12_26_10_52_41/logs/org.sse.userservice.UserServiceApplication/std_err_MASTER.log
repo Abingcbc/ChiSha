@@ -1,5 +1,0 @@
-[MASTER] 10:57:20.131 [main] ERROR ExternalProcessHandler - Class org.sse.userservice.UserServiceApplication. Clients have not finished yet, although a timeout occurred.
-ClientNode: SEARCH
-
-[MASTER] 10:57:20.242 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
-[MASTER] 10:57:20.350 [main] ERROR TestGeneration - failed to write statistics data
