@@ -11,7 +11,7 @@ spring:
     name: forum-service
 
 server:
-  port: 8086
+  port: 8087
 
 pagehelper:
   helperDialect: mysql
