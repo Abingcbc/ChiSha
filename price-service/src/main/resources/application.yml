@@ -18,3 +18,7 @@ pagehelper:
   reasonable: false
   supportMethodsArguments: true
   params: count=countSql
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
