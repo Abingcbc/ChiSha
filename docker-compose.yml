@@ -45,3 +45,15 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
+
+  recommend-service:
+    image: abingcbc/chisha-recommend-service
+    restart: always
+    ports:
+      - 8002:8002
+    networks:
+      - host
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
