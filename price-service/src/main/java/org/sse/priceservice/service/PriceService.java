@@ -28,6 +28,8 @@ public class PriceService {
             priceDTO.setWeekAveragePrice(priceMapper.searchAvgPriceInOneWeek(priceDTO.getIngredientId()));
             priceDTO.setMonthAveragePrice(priceMapper.searchAvgPriceInOneMonth(priceDTO.getIngredientId()));
             priceDTO.setTodayPrice(priceMapper.getTodayPrice(priceDTO.getIngredientId()));
+
+
         }
         return new PageInfo<>(priceDTOList);
     }
