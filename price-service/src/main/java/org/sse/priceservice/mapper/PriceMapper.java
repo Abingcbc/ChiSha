@@ -53,7 +53,7 @@ public interface PriceMapper {
             "    price_history\n" +
             "WHERE\n" +
             "    TO_DAYS(date) = TO_DAYS(NOW())\n" +
-            "        AND ingredient_id = 3; ")
+            "        AND ingredient_id = #{id}; ")
     double getTodayPrice(@Param("id") long id);
 
 
