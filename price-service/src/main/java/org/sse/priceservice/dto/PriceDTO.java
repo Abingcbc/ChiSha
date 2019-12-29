@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class PriceDTO {
     String ingredientName;
+    Double todayPrice;
     Double weekAveragePrice;
     Double monthAveragePrice;
     Long ingredientId;

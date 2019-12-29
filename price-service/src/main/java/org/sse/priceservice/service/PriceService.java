@@ -27,6 +27,7 @@ public class PriceService {
         for(PriceDTO priceDTO : priceDTOList){
             priceDTO.setWeekAveragePrice(priceMapper.searchAvgPriceInOneWeek(priceDTO.getIngredientId()));
             priceDTO.setMonthAveragePrice(priceMapper.searchAvgPriceInOneMonth(priceDTO.getIngredientId()));
+            priceDTO.setTodayPrice(priceMapper.getTodayPrice(priceDTO.getIngredientId()));
         }
         return new PageInfo<>(priceDTOList);
     }
@@ -35,12 +36,14 @@ public class PriceService {
         String name = ingredientMapper.searchNameById(id);
         Double weekAveragePrice = priceMapper.searchAvgPriceInOneWeek(id);
         Double monthAveragePrice = priceMapper.searchAvgPriceInOneMonth(id);
+        Double todayPrice = priceMapper.getTodayPrice(id);
 
         PriceDTO priceDTO = new PriceDTO();
         priceDTO.setIngredientId(id);
         priceDTO.setWeekAveragePrice(weekAveragePrice);
         priceDTO.setMonthAveragePrice(monthAveragePrice);
         priceDTO.setIngredientName(name);
+        priceDTO.setTodayPrice(todayPrice);
 
         return priceDTO;
     }

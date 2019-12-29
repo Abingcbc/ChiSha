@@ -42,6 +42,20 @@ public interface PriceMapper {
             "        AND ingredient_id = #{id}")
     double searchAvgPriceInOneWeek(@Param("id") long id);
 
+    /**
+     * get today price
+     * @param id ingredient id
+     * @return today price
+     */
+    @Select("SELECT \n" +
+            "    price\n" +
+            "FROM\n" +
+            "    price_history\n" +
+            "WHERE\n" +
+            "    TO_DAYS(date) = TO_DAYS(NOW())\n" +
+            "        AND ingredient_id = 3; ")
+    double getTodayPrice(@Param("id") long id);
+
 
 
 }
