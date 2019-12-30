@@ -5,9 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.sse.priceservice.dto.PriceDTO;
 import org.sse.priceservice.dto.SearchDTO;
+import org.sse.priceservice.dto.ResultDTO;
 import org.sse.priceservice.service.PriceService;
-
-import java.util.List;
 
 /**
  * @author HPY
@@ -25,9 +24,12 @@ public class PriceController {
     }
 
     @PostMapping("/get-list-by-name")
-    public List<PriceDTO> getPageOfPriceByName(@RequestBody SearchDTO searchDTO) {
+    public ResultDTO getPageOfPriceByName(@RequestBody SearchDTO searchDTO
+    ) {
         System.out.println(searchDTO.toString());
-        return priceService.getPriceListByName(searchDTO.getKeyword());
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setResult(priceService.getPriceListByName(searchDTO.getKeyword()));
+        return resultDTO;
     }
 
 
