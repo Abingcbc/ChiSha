@@ -105,7 +105,7 @@ public interface RecipeRelatedMapper {
             "<script>"
             + "select recipe_id, recipe_name, recipe_image from recipe\n"
             + "where recipe_id in "
-            + "<foreach item='item' index='index' collection='idList' open='(' separator=',' close=')'"
+            + "<foreach item='item' index='index' collection='idList' open='(' separator=',' close=')'>"
             + "${item}"
             + "</foreach>"
             + "</script>"

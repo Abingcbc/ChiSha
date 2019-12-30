@@ -1,5 +1,6 @@
 package org.sse.recommendservice.controller;
 
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
@@ -11,10 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.sse.recommendservice.dto.RecommendRecipe;
+import org.sse.recommendservice.dto.UserTrainField;
 import org.sse.recommendservice.service.RecommendService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,17 +46,9 @@ public class RecommendController {
     }
 
     @GetMapping("/recommend/{userId}")
-    public RecommendRecipe getRecommendRecipe(@PathVariable long userId,
-                                              HttpServletResponse response) {
-        String path = recommendService.getUserTrainField(userId);
-        if (path == null) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return null;
-        }
-        FileSystemResource resource = new FileSystemResource(new File(path));
-        MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
-        param.add("file", resource);
-        List<Long> recommendId = this.restTemplate.postForEntity("http://localhost:5000", param, List.class).getBody();
+    public RecommendRecipe getRecommendRecipe(@PathVariable long userId) {
+        UserTrainField userTrainField = recommendService.getUserTrainField(userId);
+        List<Long> recommendId = this.restTemplate.postForEntity("http://10.0.1.44:80/evaluate", userTrainField, List.class).getBody();
         return recommendService.getRecommendRecipe(recommendId);
     }
 

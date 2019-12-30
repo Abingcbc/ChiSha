@@ -1,2 +1,3 @@
 gender,age,born_place,style,taste,hist_recipe,recipe_id,recipe_style,recipe_taste,ingredient,seasoning
-1,0,1,1,1,1,1,,,,
+1,0,1,1,1,2|1,2,,,,
+1,0,1,1,1,2|1,1,,,,

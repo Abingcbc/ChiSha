@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.sse.userservice.dto.UserShow;
 import org.sse.userservice.mapper.UserMapper;
 import org.sse.userservice.model.Result;
 import org.sse.userservice.model.User;
@@ -30,10 +31,10 @@ public class UserService {
         if ( userDB == null) {
             return new Result(0, "No such user");
         }
-        if (userDB.getPassword() != passwordEncoder.encode(user.getPassword())) {
+        if (!passwordEncoder.matches(user.getPassword(), userDB.getPassword())) {
             return new Result(0, "Wrong password");
         } else {
-            return new Result(1, "Success");
+            return new Result(1, String.valueOf(userDB.getUserId()));
         }
     }
 
@@ -61,10 +62,8 @@ public class UserService {
         }
     }
 
-    public User getUserInfoWithoutPassword(String username) {
-        User user = userMapper.getUserByPhone(username);
-        user.setPassword(null);
-        return user;
+    public UserShow getUserInfoWithoutPassword(Long id) {
+        return userMapper.getUserById(id);
     }
 
 }

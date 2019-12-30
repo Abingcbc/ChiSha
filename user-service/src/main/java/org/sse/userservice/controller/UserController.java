@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.sse.userservice.dto.UserShow;
 import org.sse.userservice.model.Result;
 import org.sse.userservice.model.User;
 import org.sse.userservice.service.UserService;
@@ -34,9 +35,9 @@ public class UserController {
         return userService.register(user, styleList, tasteList);
     }
 
-    @GetMapping(value = "/user/info/{username}")
-    public User getUserInfoWithoutPassword(@PathVariable String username) {
-        return userService.getUserInfoWithoutPassword(username);
+    @GetMapping(value = "/user/info/{id}")
+    public UserShow getUserInfoWithoutPassword(@PathVariable Long id) {
+        return userService.getUserInfoWithoutPassword(id);
     }
 
 }

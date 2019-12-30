@@ -2,6 +2,7 @@ package org.sse.userservice.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
+import org.sse.userservice.dto.UserShow;
 import org.sse.userservice.model.User;
 
 import java.util.List;
@@ -14,12 +15,25 @@ import java.util.List;
 public interface UserMapper {
 
     /**
-     * get user auth info by username when login
+     * get user auth info by phone when login
      * @param phone user's phone
      * @return user auth info
      */
-    @Select("select * from user where phone = #{phone}")
+    @Select("select * from user where phone = #{phone};")
     User getUserByPhone(@Param("phone") String phone);
+
+
+    /**
+     * get user info by id
+     * @param id user's phone
+     * @return user auth info
+     */
+    @Select("select user_id, nickname, phone, email, is_authorized, gender,\n" +
+            "       p.province_name as born_place, age\n" +
+            "from user\n" +
+            "left join province p on user.born_place = p.province_id\n" +
+            "where user_id = #{id};")
+    UserShow getUserById(@Param("id") Long id);
 
     /**
      * create new user

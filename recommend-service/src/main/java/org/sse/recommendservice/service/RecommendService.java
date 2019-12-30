@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.sse.recommendservice.dto.BrowsingPlus;
 import org.sse.recommendservice.dto.QueryResult;
 import org.sse.recommendservice.dto.RecommendRecipe;
+import org.sse.recommendservice.dto.UserTrainField;
 import org.sse.recommendservice.mapper.RecipeRelatedMapper;
 import org.sse.recommendservice.mapper.UserRelatedMapper;
 import org.sse.recommendservice.model.User;
@@ -105,46 +106,16 @@ public class RecommendService {
 
     }
 
-    public String getUserTrainField(Long userId) {
+    public UserTrainField getUserTrainField(Long userId) {
         User user = userRelatedMapper.getUserById(userId);
         Map<Long, QueryResult> style = userRelatedMapper.getUserPreferStyleBatch(Sets.newHashSet(userId));
         Map<Long, QueryResult> taste = userRelatedMapper.getUserPreferTasteBatch(Sets.newHashSet(userId));
         Map<Long, QueryResult> history = userRelatedMapper.getUserBrowsingBatch(Sets.newHashSet(userId));
 
-        final String outputFilePath = "user.csv";
-        ICsvListWriter writer = null;
-        try {
-            File file = new File(outputFilePath);
-            if (file.exists()) {
-                file.delete();
-            }
-            writer = new CsvListWriter(new FileWriter(outputFilePath),
-                    CsvPreference.STANDARD_PREFERENCE);
-            String[] header = new String[]{
-                    "gender", "age", "born_place", "style", "taste",
-                    "hist_recipe"
-            };
-            writer.writeHeader(header);
-            List<Object> record = Arrays.asList(
-                    user.getGender(), ageSplit(user.getAge()),
-                    user.getBornPlace(), style.get(userId).getValue(),
-                    taste.get(userId).getValue(),
-                    history.get(userId).getValue()
-            );
-            writer.write(record);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return outputFilePath;
+        return new UserTrainField(user.getGender(), user.getAge(), user.getBornPlace(),
+                style.getOrDefault(userId, new QueryResult()).getValue(),
+                taste.getOrDefault(userId, new QueryResult()).getValue(),
+                history.getOrDefault(userId, new QueryResult()).getValue());
     }
 
     public RecommendRecipe getRecommendRecipe(List<Long> idList) {
