@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.sse.forumservice.dto.PostDTO;
 import org.sse.forumservice.mapper.PostMapper;
 import org.sse.forumservice.model.Post;
 
@@ -17,19 +18,24 @@ public class PostService {
     @Autowired
     PostMapper postMapper;
 
-    public PageInfo<Post> getPageOfPost(int pageNum,int pageSize){
+    public PageInfo<PostDTO> getPageOfPost(int pageNum,int pageSize){
         PageHelper.startPage(pageNum,pageSize);
-        List<Post> posts = postMapper.getPostOrderByTime();
+        List<PostDTO> posts = postMapper.getPostOrderByTime();
         return new PageInfo<>(posts);
     }
 
-    public PageInfo<Post> searchPageOfPost(int pageNum,int pageSize, String keyword){
+    public PageInfo<PostDTO> searchPageOfPost(int pageNum,int pageSize, String keyword){
         PageHelper.startPage(pageNum,pageSize);
-        List<Post> posts = postMapper.searchPostOrderByTime(keyword);
+        List<PostDTO> posts = postMapper.searchPostOrderByTime('%'+keyword+'%');
         return new PageInfo<>(posts);
     }
 
-    public Post getPostById(long id){
+    public PostDTO getPostById(long id){
         return postMapper.getPostById(id);
+    }
+
+    public Long publishPost(Post post) {
+        postMapper.insertPost(post);
+        return post.getPostId();
     }
 }

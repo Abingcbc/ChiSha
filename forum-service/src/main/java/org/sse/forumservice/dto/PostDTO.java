@@ -1,18 +1,21 @@
-package org.sse.forumservice.model;
+package org.sse.forumservice.dto;
 
+import lombok.Data;
 
-public class Post {
+@Data
+public class PostDTO {
 
-  private long postId;
+  private Long postId;
   private String title;
   private String content;
-  private long likeNum;
-  private long commentNum;
-  private long isDelete;
+  private Long likeNum;
+  private Long commentNum;
+  private Long isDelete;
   private String contact;
   private String postImage;
   private java.sql.Timestamp createTime;
-  private long userId;
+  private Long userId;
+  private String nickname;
 
 
   public long getPostId() {

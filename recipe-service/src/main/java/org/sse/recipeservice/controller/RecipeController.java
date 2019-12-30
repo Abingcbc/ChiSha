@@ -47,4 +47,9 @@ public class RecipeController {
         return recipeService.getDetailOfRecipeById(recipeId);
     }
 
+    @GetMapping("/browse")
+    public boolean userBrowseRecipe(@RequestParam("recipe-id") long recipeId, @RequestParam("user-id") long userId){
+        return recipeService.userBrowseRecipe(recipeId,userId);
+    }
+
 }

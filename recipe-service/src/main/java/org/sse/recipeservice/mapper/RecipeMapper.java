@@ -1,5 +1,6 @@
 package org.sse.recipeservice.mapper;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -145,4 +146,13 @@ public interface RecipeMapper {
             "WHERE\n" +
             "    recipe.recipe_id = #{id}")
     List<RecipeHasStyleDTO> getStylesByRecipeId(@Param("id") long recipeId);
+
+    /**
+     * insert browse
+     * @param recipeId recipe id
+     * @param userId user id
+     * @return is inserted
+     */
+    @Insert("insert into browsing_history(user_id,recipe_id,browse_time) values(#{userId},#{recipeId},now());")
+    boolean insertBrowse(@Param("recipeId") long recipeId,@Param("userId") long userId);
 }

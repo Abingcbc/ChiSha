@@ -53,6 +53,7 @@ public class PriceService {
         System.out.println(name);
         List<Long> idList = ingredientMapper.searchIdByName("%"+name+"%");
         System.out.println(idList.toString());
+
         List<PriceDTO> priceDTOList = new ArrayList<>();
 
         for(Long id : idList) {

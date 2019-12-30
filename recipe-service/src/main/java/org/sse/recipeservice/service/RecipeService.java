@@ -45,4 +45,8 @@ public class RecipeService {
         recipeDTO.setTastes(recipeMapper.getTastesByRecipeId(recipeId));
         return recipeDTO;
     }
+
+    public boolean userBrowseRecipe(long recipeId, long userId) {
+        return recipeMapper.insertBrowse(recipeId,userId);
+    }
 }
