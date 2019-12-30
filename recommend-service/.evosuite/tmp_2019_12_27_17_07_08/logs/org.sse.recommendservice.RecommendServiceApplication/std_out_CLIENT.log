@@ -1,0 +1,2 @@
+[MASTER] 17:10:15.797 [pool-2-thread-1] WARN  TestSuiteSerialization - Cannot load tests because file does not exist: /Users/cbc/Project/Java/ChiSha/recommend-service/.evosuite/evosuite-seeds/org.sse.recommendservice.RecommendServiceApplication.seed
+[MASTER] 17:10:15.887 [pool-2-thread-1] WARN  TimeController - Phase INITIALIZATION lasted too long, 1 seconds more than allowed.

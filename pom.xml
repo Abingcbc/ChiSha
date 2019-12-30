@@ -20,6 +20,8 @@
         <module>registry</module>
         <module>gateway</module>
         <module>user-service</module>
+        <module>recipe-service</module>
+        <module>recommend-service</module>
     </modules>
 
     <properties>
