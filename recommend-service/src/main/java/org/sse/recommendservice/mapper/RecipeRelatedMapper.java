@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.sse.recommendservice.dto.QueryResult;
+import org.sse.recommendservice.dto.RecommendRecipe;
 
 import java.util.List;
 import java.util.Map;
@@ -95,6 +96,26 @@ public interface RecipeRelatedMapper {
     })
     Map<Long, QueryResult> getRecipeSeasoningBatch(@Param("idList") Set<Long> idList);
 
+    /**
+     *
+     * @param idList
+     * @return
+     */
+    @Select({
+            "<script>"
+            + "select recipe_id, recipe_name, recipe_image from recipe\n"
+            + "where recipe_id in "
+            + "<foreach item='item' index='index' collection='idList' open='(' separator=',' close=')'"
+            + "${item}"
+            + "</foreach>"
+            + "</script>"
+    })
+    List<RecommendRecipe.Recipe> getRecipeByIdBatch(@Param("idList") List<Long> idList);
 
-
+    /**
+     *
+     * @return
+     */
+    @Select("select distinct recipe_id from recipe;")
+    List<Long> getAllRecipeId();
 }
