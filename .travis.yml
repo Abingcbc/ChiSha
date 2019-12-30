@@ -46,3 +46,9 @@ after_success:
   - docker build -t $USER_SERVICE:$COMMIT ./user-service
   - docker tag $USER_SERVICE:$COMMIT $USER_SERVICE:$TAG
   - docker push $USER_SERVICE
+
+  # RECOMMEND-SERVICE
+  - export RECOMMEND_SERVICE=abingcbc/chisha-recommend-service
+  - docker build -t $RECOMMEND_SERVICE:$COMMIT ./recommend-service
+  - docker tag $RECOMMEND_SERVICE:$COMMIT $RECOMMEND_SERVICE:$TAG
+  - docker push $RECOMMEND_SERVICE

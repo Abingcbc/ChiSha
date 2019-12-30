@@ -1,3 +1,0 @@
-[MASTER] 17:11:08.967 [main] ERROR ExternalProcessHandler - Class org.sse.recommendservice.RecommendServiceApplication. Clients have not finished yet, although a timeout occurred.
-ClientNode: JUNIT_CHECK
-

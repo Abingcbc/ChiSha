@@ -1,13 +1,15 @@
 package org.sse.recommendservice.service;
 
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.sse.recommendservice.dto.BrowsingPlus;
 import org.sse.recommendservice.dto.QueryResult;
+import org.sse.recommendservice.dto.RecommendRecipe;
+import org.sse.recommendservice.dto.UserTrainField;
 import org.sse.recommendservice.mapper.RecipeRelatedMapper;
 import org.sse.recommendservice.mapper.UserRelatedMapper;
-import org.sse.recommendservice.dto.BrowsingPlus;
-import org.supercsv.cellprocessor.Optional;
-import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.sse.recommendservice.model.User;
 import org.supercsv.io.CsvListWriter;
 import org.supercsv.io.ICsvListWriter;
 import org.supercsv.prefs.CsvPreference;
@@ -58,13 +60,14 @@ public class RecommendService {
         Map<Long, QueryResult> recipeIngredientMap = recipeRelatedMapper.getRecipeIngredientBatch(recipeIdSet);
         Map<Long, QueryResult> recipeSeasoningMap = recipeRelatedMapper.getRecipeSeasoningBatch(recipeIdSet);
 
+        final String outputFilePath = "train.csv";
         ICsvListWriter writer = null;
         try {
-            File file = new File("train.csv");
+            File file = new File(outputFilePath);
             if (file.exists()) {
                 file.delete();
             }
-            writer = new CsvListWriter(new FileWriter("train.csv"),
+            writer = new CsvListWriter(new FileWriter(outputFilePath),
                     CsvPreference.STANDARD_PREFERENCE);
             String[] header = new String[]{
                     "gender", "age", "born_place", "style", "taste",
@@ -99,7 +102,70 @@ public class RecommendService {
                 e.printStackTrace();
             }
         }
-        return "train.csv";
+        return outputFilePath;
 
+    }
+
+    public UserTrainField getUserTrainField(Long userId) {
+        User user = userRelatedMapper.getUserById(userId);
+        Map<Long, QueryResult> style = userRelatedMapper.getUserPreferStyleBatch(Sets.newHashSet(userId));
+        Map<Long, QueryResult> taste = userRelatedMapper.getUserPreferTasteBatch(Sets.newHashSet(userId));
+        Map<Long, QueryResult> history = userRelatedMapper.getUserBrowsingBatch(Sets.newHashSet(userId));
+
+        return new UserTrainField(user.getGender(), user.getAge(), user.getBornPlace(),
+                style.getOrDefault(userId, new QueryResult()).getValue(),
+                taste.getOrDefault(userId, new QueryResult()).getValue(),
+                history.getOrDefault(userId, new QueryResult()).getValue());
+    }
+
+    public RecommendRecipe getRecommendRecipe(List<Long> idList) {
+        RecommendRecipe recommendRecipe = new RecommendRecipe();
+        recommendRecipe.setRecipeList(recipeRelatedMapper.getRecipeByIdBatch(idList));
+        return recommendRecipe;
+    }
+
+    public String getAllRecipeTrainField() {
+        List<Long> idList = recipeRelatedMapper.getAllRecipeId();
+        Map<Long, QueryResult> recipeStyleMap = recipeRelatedMapper.getRecipeStyleBatch(new HashSet<>(idList));
+        Map<Long, QueryResult> recipeTasteMap = recipeRelatedMapper.getRecipeTasteBatch(new HashSet<>(idList));
+        Map<Long, QueryResult> recipeIngredientMap = recipeRelatedMapper.getRecipeIngredientBatch(new HashSet<>(idList));
+        Map<Long, QueryResult> recipeSeasoningMap = recipeRelatedMapper.getRecipeSeasoningBatch(new HashSet<>(idList));
+
+        final String outputFilePath = "all_recipe.csv";
+        ICsvListWriter writer = null;
+        try {
+            File file = new File(outputFilePath);
+            if (file.exists()) {
+                file.delete();
+            }
+            writer = new CsvListWriter(new FileWriter(outputFilePath),
+                    CsvPreference.STANDARD_PREFERENCE);
+            String[] header = new String[]{
+                    "recipe_id", "recipe_style",
+                    "recipe_taste", "ingredient", "seasoning"
+            };
+            writer.writeHeader(header);
+            for (Long id: idList) {
+                List<Object> record = Arrays.asList(
+                        id, recipeStyleMap.get(id).getValue(),
+                        recipeTasteMap.get(id).getValue(),
+                        recipeIngredientMap.get(id).getValue(),
+                        recipeSeasoningMap.get(id).getValue()
+                );
+                writer.write(record);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return outputFilePath;
     }
 }

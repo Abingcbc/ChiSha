@@ -1,4 +1,5 @@
-package org.sse.userservice.model;
+package org.sse.recommendservice.model;
+
 
 import lombok.Data;
 
