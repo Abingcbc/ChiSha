@@ -12,5 +12,6 @@ public class PriceDTO {
     Double weekAveragePrice;
     Double monthAveragePrice;
     Long ingredientId;
+    String ingredientImage;
 
 }

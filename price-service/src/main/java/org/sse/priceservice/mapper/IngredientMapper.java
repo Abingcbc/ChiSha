@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.sse.priceservice.dto.PriceDTO;
+import org.sse.priceservice.model.Ingredient;
 
 import java.util.List;
 
@@ -21,15 +22,15 @@ public interface IngredientMapper {
      * @return ingredient name
      */
     @Select("SELECT \n" +
-            "    ingredient_name\n" +
+            "   *\n" +
             "FROM\n" +
             "    ingredient\n" +
             "WHERE\n" +
             "    ingredient_id = #{id}")
-    String searchNameById(@Param("id") long id);
+    Ingredient searchNameById(@Param("id") long id);
 
     @Select("SELECT \n" +
-            "    ingredient_id, ingredient_name\n" +
+            "    *\n" +
             "FROM\n" +
             "    ingredient")
     List<PriceDTO> getIngredientList();

@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @SpringCloudApplication
 @EnableTransactionManagement
-@EnableSwagger2Doc
 public class UserServiceApplication {
 
 	public static void main(String[] args) {
