@@ -47,10 +47,11 @@ public class UserService {
                 if (userMapper.createNewUser(user) != 1) {
                     throw new IOException();
                 }
-                if (userMapper.createNewUserStyle(user.getUserId(), styleList) != 1) {
+                System.out.println(user.getUserId());
+                if (userMapper.createNewUserStyle(user.getUserId(), styleList) < 1) {
                     throw new IOException();
                 }
-                if (userMapper.createNewUserTaste(user.getUserId(), tasteList) != 1) {
+                if (userMapper.createNewUserTaste(user.getUserId(), tasteList) < 1) {
                     throw new IOException();
                 }
                 return new Result(1, "Success");
