@@ -1,0 +1,209 @@
+<import name="my-input" src="apex-ui/components/input/index"></import>
+<import name="my-button" src="apex-ui/components/button/index"></import>
+<import name="my-divider" src="apex-ui/components/divider/index"></import>
+<import name="my-radio" src="apex-ui/components/radio/index"></import>
+<import name="my-checkbox-group" src="apex-ui/components/checkbox-group/index"></import>
+<import name="my-checkbox" src="apex-ui/components/checkbox/index"></import>
+<import name="my-switch" src="apex-ui/components/switch/index"></import>
+
+<template>
+    <div class="page">
+      <div class="input_block">
+        <my-input onchange="bindUsername" title="用户名" autofocus="true" placeholder="用户名"></my-input>
+        <my-input onchange="bindPhone" title="手机号" type="number" autofocus="true" placeholder="手机号"></my-input>
+        <my-input onchange="bindMail" title="邮箱" autofocus="true" placeholder="邮箱"></my-input>
+        <my-input onchange="bindPassword" type="password" title="密码" autofocus="true" placeholder="密码"></my-input>
+        <my-input onchange="bindConfirmPassword" type="password" title="确认密码" autofocus="true" placeholder="确认密码"></my-input>
+        <my-input onchange="bindAge" title="年龄" type="number" autofocus="true" placeholder="年龄"></my-input>
+          <text style="margin-left:20px; margin-top:15px;">性别：</text>
+          <div style=" padding-left:20px; padding-top:15px;">
+          <my-switch onchange="bindSwitch" open="男" close="女"></my-switch>
+          </div>
+        <text style="margin-left:20px; margin-top:15px;">偏好菜系：</text>
+        <div class="checkbox_row">
+          <label target="1" >粤菜:</label>
+          <input id="1" onchange="bindType" type="checkbox"></input>
+          <label target="2" class="flex_grow">川菜:</label>
+          <input id="2"  onchange="bindType" type="checkbox"></input>
+          <label target="3"  class="flex_grow">鲁菜:</label>
+          <input id="3" onchange="bindType" type="checkbox"></input>
+          <label target="4" class="flex_grow">苏菜:</label>
+          <input id="4" onchange="bindType" type="checkbox"></input>
+
+        </div>
+        <div class="checkbox_row">
+          <label target="5" class="flex_grow">浙菜:</label>
+          <input id="5" onchange="bindType" type="checkbox"></input>
+          <label target="6" >闽菜:</label>
+          <input id="6" onchange="bindType" type="checkbox"></input>
+          <label target="7" class="flex_grow">湘菜:</label>
+          <input id="7" onchange="bindType" type="checkbox"></input>
+          <label target="8" class="flex_grow">徽菜:</label>
+          <input id="8" onchange="bindType" type="checkbox"></input>
+        </div>
+        <text style="margin-left:20px; margin-top:15px;">偏好口味：</text>
+        <div class="checkbox_row">
+          <label target="9" >酸:</label>
+          <input id="9" onchange="bindTaste" type="checkbox"></input>
+          <label target="10" class="flex_grow">甜:</label>
+          <input id="10" onchange="bindTaste" type="checkbox"></input>
+          <label target="11" class="flex_grow">苦:</label>
+          <input id="11" onchange="bindTaste" type="checkbox"></input>
+        </div>
+         <div class="checkbox_row">
+          <label target="12" >辣:</label>
+          <input id="12" onchange="bindTaste" type="checkbox"></input>
+          <label target="13" class="flex_grow">咸:</label>
+          <input id="13" onchange="bindTaste" type="checkbox"></input>
+        </div>
+        <div class="row">
+          <text class="select-text">出生地</text>
+          <select class="select" onchange="bindArea">
+              <option for="{{provinces}}" value={{$idx}}>{{$item}}</option>
+          </select>
+        </div>
+        <my-button ontap="complete" type="success">注册</my-button>
+      </div>
+    </div>
+</template>
+<style>
+  .page {
+    flex-direction: column;
+    background-color: #f8f8f9
+  }
+  .input_block {
+      flex-direction: column;
+      margin-top: 30px;
+      margin-bottom: 20px;
+  }
+  .row {
+    flex-direction: row;
+    width: 100%;
+    padding: 0px 20px;
+    margin-top: 15px;
+    margin-bottom:15px;
+  }
+  .select {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .select_text {
+    font-size: 40px;
+  }
+  .checkbox_row {
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+</style>
+
+<script>
+import fetch from '@system.fetch'
+import router from '@system.router'
+export default {
+  private: {
+    prefer_type: [],
+    prefer_taste: [],
+    username: '',
+    phone:'',
+    mail:'',
+    password: '',
+    confirmPassword: '',
+    age:'',
+    area: 0,
+    provinces: [
+      '北京市','天津市','上海市','重庆市','河北省','山西省',
+      '辽宁省','吉林省','黑龙江省','江苏省','浙江省','安徽省','福建省','江西省',
+      '山东省','河南省','湖北省','湖南省','广东省','海南省','四川省','贵州省','云南省',
+      '陕西省','甘肃省','青海省','台湾省','内蒙古自治区','广西壮族自治区','西藏自治区',
+      '宁夏回族自治区','新疆维吾尔自治区','香港特别行政区','澳门特别行政区'
+    ]
+  },
+  complete(){
+    var that=this
+    fetch.fetch({
+      url:'http://10.0.1.34:8001/register',
+      method: 'Post',
+      responseType: 'json',
+      header:{
+        'content-type':'application/json'
+      },
+      data: {
+        'userinformation':{
+          'nickname': that.username,
+          'phone': that.phone,
+          'email': that.mail,
+          'isAuthorized':'0',
+          'gender': that.gender,
+          'password': that.password,
+          'born_place': that.area,
+          'age':that.age
+        },
+        'type':that.prefer_type,
+        'taste': that.prefer_taste
+      },
+      success: function(response){
+        console.log(response.data)
+        router.replace({
+          uri:'/Login'
+        })
+      }
+    })
+  },
+  bindUsername(e){
+    this.username=e.detail.value
+  },
+  bindPhone(e){
+    this.phone=e.detail.value
+  },
+  bindMail(e){
+    this.mail=e.detail.value
+  },
+  bindPassword(e){
+    this.password=e.detail.value
+  },
+  bindConfirmPassword(e){
+    this.confirmPassword=e.detail.value
+  },
+  bindAge(e){
+    this.age=e.detail.value
+  },
+  bindArea(e){
+    console.log(e.newValue)
+    this.area=e.newValue
+  },
+  bindType(e){
+    if(e.checked){
+      this.prefer_type.push(parseInt(e._target.id))
+    }else{
+      for(var index in this.prefer_type){
+        if(this.prefer_type[index]===parseInt(e._target.id)){
+          this.prefer_type.splice(index,1)
+        }
+      }
+    }
+    console.log(this.prefer_type)
+  },
+  bindTaste(e) {
+    if(e.checked){
+      this.prefer_taste.push(parseInt(e._target.id)-8)
+    }else{
+      for(var index in this.prefer_taste){
+        if(this.prefer_taste[index]===parseInt(e._target.id)-8){
+          this.prefer_taste.splice(index,1)
+        }
+      }
+    }
+    console.log(this.prefer_taste)
+  },
+  bindSwitch(e){
+    if(e.detail.checked){
+      this.gender=0
+    }else{
+      this.gender=1
+    }
+  }
+}
+</script>

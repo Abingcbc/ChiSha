@@ -1,0 +1,169 @@
+<import name="my-search-bar" src="apex-ui/components/search-bar/index"></import>
+<template>
+  <div class="page">
+    <text class="title">{{title}}</text>
+      <div ontouchend="gotoSearch" style="length:100%;">
+        <my-search-bar disabled="{{true}}" placeholder="搜索菜谱名"></my-search-bar>
+      </div>
+      <list class="tutorial-page" onscrollbottom="loadMoreData">
+        <block for="{{result_list}}">
+          <list-item type="card" class="tutorial-page">
+            <div ontouchend="gotoDetail($item)" class="card">
+              <image class="detail_image" alt="/Common/404.jpeg" src="{{$item.recipeImage}}"></image>
+              <text class="detail_text">{{$item.recipeName}}</text>
+            </div>
+          </list-item>
+        </block>
+        <list-item type="loadMore">
+          <block if="{{page<maxPage}}">
+            <div class="load_more">
+              <progress type="circular"></progress>
+              <text>加载更多</text>
+            </div>
+          </block>
+          <block else>
+            <div class="load_more">
+              <text>已无更多</text>
+            </div>
+          </block>    
+        </list-item>  
+      </list> 
+  </div>
+</template>
+<style>
+  .page {
+    flex-direction: column;
+  }
+  .title {
+    font-size: 40px;
+    text-align: center;
+    padding: 40px 20px 15px;
+    color: #ffffff;
+    font-weight: bolder;
+    background-color: #09ba07;
+  }
+  .background {
+    background-color: #f8f8f9;
+    flex-direction: column;
+  }
+  .tutorial-page {
+      width: 100%;
+      flex-direction: column;
+      background-color: #f8f8f9;
+    }
+
+    .card {
+      margin: 20px;
+      width: 90%;
+      height: 200px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      justify-content: space-between;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail_text {
+      margin-right: 15px;
+      font-size: 32px;
+      color: #495060;
+    }
+
+    .detail_image {
+      height: 160px;
+      width: 200px;
+      margin: 20px;
+    }
+    .load_more {
+      margin-left: auto;
+      margin-right: auto;
+      padding: 10px;
+    }
+</style>
+<script>
+import router from '@system.router'
+import fetch from '@system.fetch'
+import storage from '@system.storage'
+export default{
+  protected: {
+    id:'0',
+    title:''
+  },
+  private: {
+    page: 0,
+    maxPage: 0,
+    result_list:[],
+    userId: 0,
+    isLogin:false
+  },
+  onInit() {
+    var that=this
+    that.result_list=[]
+    storage.get({
+      key:'id',
+      success: function(data){
+        console.log(data)
+        if(data!==''){
+          that.isLogin=true
+          that.userId=data
+        }
+        else{
+          that.isLogin=false
+        }
+      },
+      fail: function(data,code){
+        console.log(data,code)
+      }
+    })
+    fetch.fetch({
+      url:'http://10.0.1.34:8085/recipe/get-list-by-style/'+that.id+'?page-num=1&&page-size=5',
+      responseType: 'json',
+      header:{
+        'content-type':'application/json'
+      },
+      success: function(response){
+        console.log(response.data)
+        for(var index in response.data.list){
+          that.result_list.push(response.data.list[index])
+        }
+        that.page=response.data.pageNum
+        that.maxPage=response.data.pages
+      }
+    })
+  },
+  gotoSearch() {
+    router.push ({
+      uri: '/Search'
+    })
+  },
+  loadMoreData(){
+    var that=this
+    if(that.page===that.maxPage){
+      return
+    }
+    var newPage=that.page+1
+    fetch.fetch({
+      url:'http://10.0.1.34:8085/recipe/get-list-by-style/'+that.id+'?page-num='+String(newPage)+'&&page-size=5',
+      responseType: 'json',
+      success: function(response){
+        for(var index in response.data.list){
+          console.log(response.data.list[index])
+          that.result_list.push(response.data.list[index])
+        }
+        that.page=response.data.pageNum
+      }
+    })
+  },
+  gotoDetail(item){
+    var that=this
+    router.push({
+      uri: '/Detail',
+      params:{
+        id:item.recipeId,
+        userId: that.userId,
+        isLogin: that.isLogin
+      }
+    })  
+  }
+}
+</script>
