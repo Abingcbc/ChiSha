@@ -15,7 +15,7 @@ public class User {
   private String isAuthorized;
   private long gender;
   private String password;
-  private String bornPlace;
+  private long bornPlace;
   private long age;
 
 }

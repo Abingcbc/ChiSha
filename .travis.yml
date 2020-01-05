@@ -18,6 +18,10 @@ env:
 
 script: "mvn cobertura:cobertura"
 
+branches:
+  only:
+    - master
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
@@ -42,3 +46,9 @@ after_success:
   - docker build -t $USER_SERVICE:$COMMIT ./user-service
   - docker tag $USER_SERVICE:$COMMIT $USER_SERVICE:$TAG
   - docker push $USER_SERVICE
+
+  # RECOMMEND-SERVICE
+  - export RECOMMEND_SERVICE=abingcbc/chisha-recommend-service
+  - docker build -t $RECOMMEND_SERVICE:$COMMIT ./recommend-service
+  - docker tag $RECOMMEND_SERVICE:$COMMIT $RECOMMEND_SERVICE:$TAG
+  - docker push $RECOMMEND_SERVICE

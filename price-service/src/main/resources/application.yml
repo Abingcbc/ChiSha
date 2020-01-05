@@ -11,7 +11,7 @@ spring:
     name: price-service
 
 server:
-  port: 8085
+  port: 8086
 
 pagehelper:
   helperDialect: mysql

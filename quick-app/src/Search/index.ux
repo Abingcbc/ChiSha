@@ -1,0 +1,181 @@
+<import name="my-input" src="apex-ui/components/input/index"></import>
+<import name="my-search-bar" src="apex-ui/components/search-bar/index"></import>
+<import name="my-icon" src="apex-ui/components/icon/index"></import>
+<import name="my-button" src="apex-ui/components/button/index"></import>
+<import name="my-card" src="apex-ui/components/card/index"></import>
+
+
+<template>
+    <div class="page">
+        <div style="flex-direction: row;">
+          <div style="width:80%">
+            <my-search-bar onchange="bindSearch" cancel-text="X" placeholder="搜索菜谱名"></my-search-bar>
+          </div>
+          <text ontouchend="search" class="button_text">搜索</text>  
+        </div>  
+        <list class="tutorial-page" onscrollbottom="loadMoreData">
+          <block for="{{result_list}}">
+            <list-item type="card" class="tutorial-page">
+              <div ontouchend="gotoDetail($item)" class="card">
+                <image class="detail_image" alt="/Common/404.jpeg" src="{{$item.recipeImage}}"></image>
+                <text class="detail_text">{{$item.recipeName}}</text>
+              </div>
+          </list-item>
+          </block>
+          <list-item type="loadMore">
+            <block if="{{page<maxPage}}">
+              <div class="load_more">
+                <progress type="circular"></progress>
+                <text>加载更多</text>
+              </div>
+            </block>
+            <block else>
+              <div class="load_more">
+                <text>已无更多</text>
+              </div>
+            </block>    
+          </list-item>  
+        </list> 
+    </div>
+</template>
+<style>
+    .button_text {
+      margin-left: 20px;
+        font-size: 30px;
+        color: #80848f;
+    }
+    .page {
+         flex-direction: column;
+         background-color: #f8f8f9
+    }
+
+    .tutorial-page {
+      width: 100%;
+      flex-direction: column;
+      background-color: #f8f8f9;
+    }
+
+    .card {
+      margin: 20px;
+      width: 90%;
+      height: 200px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      justify-content: space-between;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail_text {
+      margin-right: 15px;
+      font-size: 32px;
+      color: #495060;
+    }
+    .detail_image {
+      height: 160px;
+      width: 200px;
+      margin: 20px;
+    }
+    .load_more {
+      margin-left: auto;
+      margin-right: auto;
+      padding: 10px;
+    }
+</style>
+<script>
+import router from '@system.router'
+import fetch from '@system.fetch'
+import storage from '@system.storage'
+export default {
+  private: {
+    search_text:'',
+    result_list:[],
+    page:1,
+    maxPage:1,
+    isLogin: false,
+    userId:0
+  },
+  bindSearch(e){
+    this.search_text=e.detail.event.value
+  },
+  onInit() {
+    var that=this
+    storage.get({
+      key:'id',
+      success: function(data){
+        console.log(data)
+        if(data!==''){
+          that.isLogin=true
+          that.userId=data
+        }
+        else{
+          that.isLogin=false
+        }
+      },
+      fail: function(data,code){
+        console.log(data,code)
+      }
+    })
+  },
+  gotoDetail(item){
+    var that=this
+    router.push({
+      uri: '/Detail',
+      params:{
+        id:item.recipeId,
+        userId: that.userId,
+        isLogin: that.isLogin
+      }
+    })
+  },
+  search() {
+    var that=this
+    that.result_list=[]
+    fetch.fetch({
+      url:'http://10.0.1.34:8085/recipe/search?page-num=1&&page-size=5',
+      responseType: 'json',
+      header:{
+        'content-type':'application/json'
+      },
+      method: 'POST',
+      data: {
+        'keyword':that.search_text
+      },
+      success: function(response){
+        console.log(response.data)
+        for(var index in response.data.list){
+          that.result_list.push(response.data.list[index])
+        }
+        that.page=response.data.pageNum
+        that.maxPage=response.data.pages
+      }
+    })
+  },
+  loadMoreData(){
+    var that=this
+    if(that.page===that.maxPage){
+      return
+    }
+    var newPage=that.page+1
+    fetch.fetch({
+      url:'http://10.0.1.34:8085/recipe/search?page-num='+String(newPage)+'&&page-size=5',
+      responseType: 'json',
+      header:{
+        'content-type':'application/json'
+      },
+      data:{
+        'keyword':that.search_text
+      },
+      method: 'POST',
+      success: function(response){
+        console.log(response.data)
+        for(var index in response.data.list){
+          console.log(response.data.list[index])
+          that.result_list.push(response.data.list[index])
+        }
+        that.page=response.data.pageNum
+      }
+    })
+  }
+}
+</script>

@@ -26,7 +26,7 @@ public interface PriceMapper {
             "WHERE\n" +
             "    DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= DATE(date)\n" +
             "        AND ingredient_id = #{id}")
-    double searchAvgPriceInOneMonth(@Param("id") long id);
+    Double searchAvgPriceInOneMonth(@Param("id") long id);
 
     /**
      * search avg price in one week by ingredient id
@@ -40,7 +40,21 @@ public interface PriceMapper {
             "WHERE\n" +
             "    DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= DATE(date)\n" +
             "        AND ingredient_id = #{id}")
-    double searchAvgPriceInOneWeek(@Param("id") long id);
+    Double searchAvgPriceInOneWeek(@Param("id") long id);
+
+    /**
+     * get today price
+     * @param id ingredient id
+     * @return today price
+     */
+    @Select("SELECT \n" +
+            "    price\n" +
+            "FROM\n" +
+            "    price_history\n" +
+            "WHERE\n" +
+            "    TO_DAYS(date) = TO_DAYS(NOW())\n" +
+            "        AND ingredient_id = #{id}; ")
+    Double getTodayPrice(@Param("id") long id);
 
 
 

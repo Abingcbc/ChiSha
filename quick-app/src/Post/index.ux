@@ -1,0 +1,141 @@
+<import name="my-icon" src="apex-ui/components/icon/index"></import>
+<import name="my-toast" src="apex-ui/components/toast/index"></import>
+<template>
+  <div class="page">
+    <image class="title_image" alt="/Common/404.jpeg" src="{{info.url}}"></image>
+    <text class="title_text">{{info.title}}</text>
+    <text class="subtitle_text">商品描述：</text>
+    <text class="content">{{info.description}}</text>
+    <text class="subtitle_text">联系方式（手机/邮箱）：{{info.phone}}</text>
+    <div ontouchend="like" class="like">
+      <text style="color:{{like_color}}" class="like_text">:{{like_number}}</text>
+      <my-icon color="{{like_color}}" type="thumbs-up" size="48"></my-icon>
+    </div>
+    <my-toast id="toast"></my-toast>
+  </div>
+</template>
+<style>
+  .page {
+    flex-direction: column;
+    background-color: #f8f8f9
+  }
+  .title_image {
+    width: 100%;
+    height: 450px;
+  }
+  .title_text {
+    text-align: center;
+    font-size: 50px;
+    color: #1c2438;
+    margin: 40px;
+  }
+  .subtitle_text {
+    margin-left: 30px;
+    font-size: 30px;
+    color: #495060;
+  }
+  .content {
+    margin-right: 30px;
+    margin-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 25px;
+    color: #80848f; 
+  }
+  .like {
+    flex-direction: row-reverse;
+    margin: 30px 20px;
+  }
+  .like_text {
+    font-size: 30px
+  }
+</style>
+<script>
+import fetch from '@system.fetch'
+import media from '@system.media'
+export default{
+  protected: {
+    id: '0',
+    userId: 0,
+    isLogin: false
+  },
+  private: {
+    info:{
+      title:'',
+      url: '',
+      description: '',
+      phone:''
+    },
+    like_status: false,
+    like_number: 0,
+    like_color: '#495060'
+  },
+  onInit() {
+    var that=this
+    fetch.fetch({
+      url:'http://10.0.1.34:8087/post/get-post/'+that.id,
+      responseType: 'json',
+      success: function(response) {
+        console.log(response.data)
+        that.info.title=response.data.title
+        that.info.url=response.data.postImage
+        that.info.description=response.data.content
+        that.info.phone=response.data.contact
+        that.like_number=response.data.likeNum
+      }
+    })
+    if(that.isLogin==='true'){
+      fetch.fetch({
+        url:'http://10.0.1.34:8087/like/check?user-id='+String(that.userId)+'&&post-id='+String(that.id),
+        success: function(response){
+          console.log(response)
+          if(response.data==="false"){
+            that.like_status=false
+            that.like_color='#495060'
+          }
+          else{
+            that.like_status=true
+            that.like_color='#ed3f14'
+          }
+        },
+        fail: function(response){
+          console.log('fail')
+          console.log(response)
+        }
+      }) 
+    }
+  },
+  like(){
+    var that=this
+    console.log(typeof(that.isLogin))
+    if(that.isLogin==='true'){
+      if(this.like_status){
+        fetch.fetch({
+          url:'http://10.0.1.34:8087/like/unlike-post?user-id='+String(that.userId)+'&&post-id='+String(that.id),
+          success: function(response){
+            console.log(response)
+            that.like_status=false
+            that.like_number-=1
+            that.like_color='#495060'
+          }
+        })
+      }else{
+        fetch.fetch({
+          url:'http://10.0.1.34:8087/like/like-post?user-id='+String(that.userId)+'&&post-id='+String(that.id),
+          success: function(response){
+            console.log(response)
+            that.like_status=true
+            that.like_number+=1
+            that.like_color='#ed3f14'
+          }
+        })
+      }
+    }else{
+      that.$child('toast').showToast({
+        content: '请先登录',
+        type: 'error'
+      })
+    }
+  }
+}
+</script>

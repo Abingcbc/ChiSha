@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.sse.recommendservice.dto.BrowsingPlus;
 import org.sse.recommendservice.dto.QueryResult;
+import org.sse.recommendservice.model.User;
 
 import java.util.List;
 import java.util.Map;
@@ -90,5 +91,13 @@ public interface UserRelatedMapper {
                     "</script>"
     })
     Map<Long, QueryResult> getUserBrowsingBatch(@Param("idList") Set<Long> idList);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @Select("select * from user where user_id = #{id};")
+    User getUserById(@Param("id") Long id);
 
 }

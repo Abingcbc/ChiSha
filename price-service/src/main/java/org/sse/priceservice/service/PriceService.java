@@ -27,20 +27,25 @@ public class PriceService {
         for(PriceDTO priceDTO : priceDTOList){
             priceDTO.setWeekAveragePrice(priceMapper.searchAvgPriceInOneWeek(priceDTO.getIngredientId()));
             priceDTO.setMonthAveragePrice(priceMapper.searchAvgPriceInOneMonth(priceDTO.getIngredientId()));
+            priceDTO.setTodayPrice(priceMapper.getTodayPrice(priceDTO.getIngredientId()));
         }
         return new PageInfo<>(priceDTOList);
     }
 
     public PriceDTO getPriceById(long id) {
-        String name = ingredientMapper.searchNameById(id);
+        String name = ingredientMapper.searchNameById(id).getIngredientName();
+        String ingredientImage = ingredientMapper.searchNameById(id).getIngredientImage();
         Double weekAveragePrice = priceMapper.searchAvgPriceInOneWeek(id);
         Double monthAveragePrice = priceMapper.searchAvgPriceInOneMonth(id);
+        Double todayPrice = priceMapper.getTodayPrice(id);
 
         PriceDTO priceDTO = new PriceDTO();
         priceDTO.setIngredientId(id);
         priceDTO.setWeekAveragePrice(weekAveragePrice);
         priceDTO.setMonthAveragePrice(monthAveragePrice);
         priceDTO.setIngredientName(name);
+        priceDTO.setTodayPrice(todayPrice);
+        priceDTO.setIngredientImage(ingredientImage);
 
         return priceDTO;
     }
@@ -48,6 +53,7 @@ public class PriceService {
         System.out.println(name);
         List<Long> idList = ingredientMapper.searchIdByName("%"+name+"%");
         System.out.println(idList.toString());
+
         List<PriceDTO> priceDTOList = new ArrayList<>();
 
         for(Long id : idList) {
