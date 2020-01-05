@@ -1,0 +1,106 @@
+<import name="my-input" src="apex-ui/components/input/index"></import>
+<import name="my-search-bar" src="apex-ui/components/search-bar/index"></import>
+<import name="my-icon" src="apex-ui/components/icon/index"></import>
+<import name="my-button" src="apex-ui/components/button/index"></import>
+<import name="my-card" src="apex-ui/components/card/index"></import>
+
+
+<template>
+    <div class="page">
+        <div style="flex-direction: row;">
+          <div style="width:80%">
+            <my-search-bar onchange="bindSearch" cancel-text="X" placeholder="搜索菜谱名"></my-search-bar>
+          </div>
+          <text ontouchend="search" class="button_text">搜索</text>  
+        </div>  
+        <list class="tutorial-page" onscrollbottom="loadMoreData">
+          <block for="{{test_list}}">
+            <list-item type="card" class="tutorial-page">
+              <div ontouchend="gotoDetail" class="card">
+                <image class="detail_image" src="/Common/pork.png"></image>
+                <text class="detail_text">生切猪肉</text>
+              </div>
+          </list-item>
+          </block>
+          <list-item type="loadMore">
+            <block if="{{page<maxPage}}">
+              <div class="load_more">
+                <progress type="circular"></progress>
+                <text>加载更多</text>
+              </div>
+            </block>
+            <block else>
+              <div class="load_more">
+                <text>已无更多</text>
+              </div>
+            </block>    
+          </list-item>  
+        </list> 
+    </div>
+</template>
+<style>
+    .button_text {
+      margin-left: 20px;
+        font-size: 30px;
+        color: #80848f;
+    }
+    .page {
+         flex-direction: column;
+         background-color: #f8f8f9
+    }
+
+    .tutorial-page {
+      width: 100%;
+      flex-direction: column;
+      background-color: #f8f8f9;
+    }
+
+    .card {
+      margin: 20px;
+      width: 90%;
+      height: 200px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      justify-content: space-between;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .detail_text {
+      margin-right: 15px;
+      font-size: 32px;
+      color: #495060;
+    }
+    .detail_image {
+      height: 160px;
+      margin: 20px;
+    }
+    .load_more {
+      margin-left: auto;
+      margin-right: auto;
+      padding: 10px;
+    }
+</style>
+<script>
+import router from '@system.router'
+export default {
+  private: {
+    search_text:'',
+    test_list:[1,2,3,4,5,6,7],
+    result_list:[],
+    page:0,
+    maxPage:10
+  },
+  bindSearch(e){
+    this.search_text=e.detail.event.value
+  },
+  gotoDetail(){
+    router.push({
+      uri: '/Detail'
+    })
+  },
+  search() {
+
+  }
+}
+</script>

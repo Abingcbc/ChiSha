@@ -1,0 +1,110 @@
+<import name="my-search-bar" src="apex-ui/components/search-bar/index"></import>
+<import name="my-card" src="apex-ui/components/card/index"></import>
+
+<template>
+    <div class="page">
+      <div style="flex-direction: row;">
+        <div style="width:80%">
+            <my-search-bar onchange="bindSearch" cancel-text="X" placeholder="搜索食材名"></my-search-bar>
+        </div>
+        <text ontouchend="search" class="button_text">搜索</text>
+      </div>
+      <list class="tutorial-page">
+        <block for="{{result_list}}">
+          <list-item type="card" class="tutorial-page">
+            <my-card title="{{$item.ingredientName}}" thumb="/Common/{{$item.ingredientName}}.png" extra="今日价格：￥{{$item.todayPrice}}">
+              <div class="sub_detail">
+                <div style="flex-direction:column;">
+                  <text>此周平均：</text>
+                  <text>此月平均：</text>
+                </div>
+                <div style="flex-direction:column;">
+                  <text>￥{{$item.weekAveragePrice}}</text>
+                  <text>￥{{$item.monthAveragePrice}}</text>
+                </div>
+              </div>
+            </my-card>
+          </list-item>
+        </block> 
+        <list-item type="loadMore">
+          <block if="{{page<maxPage}}">
+            <div class="load_more">
+              <progress type="circular"></progress>
+              <text>加载更多</text>
+            </div>
+          </block>
+          <block else>
+            <div class="load_more">
+              <text>已无更多</text>
+            </div>
+          </block>    
+        </list-item> 
+      </list>
+    </div>
+</template>
+<style>
+    .button_text {
+      margin-left: 20px;
+      font-size: 30px;
+      color: #80848f;
+    }
+    .page {
+      flex-direction: column;
+      background-color: #f8f8f9;
+    }
+    .tutorial-page {
+      width: 100%;
+      flex-direction: column;
+      background-color: #f8f8f9;
+    }
+    .background {
+      background-color: #f8f8f9;
+      flex-direction: column;
+    }
+    .load_more {
+      margin-left: auto;
+      margin-right: auto;
+      padding: 10px;
+    }
+    .sub_detail {
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+  }
+</style>
+<script>
+import fetch from '@system.fetch'
+export default {
+  private: {
+    search_text:'',
+    result_list:[],
+  },
+  onInit() {
+  },
+  bindSearch(e){
+    this.search_text=e.detail.event.value
+  },
+  search() {
+    var that=this
+    that.result_list=[]
+    fetch.fetch({
+      url:'http://10.0.1.34:8086/price/get-list-by-name',
+      responseType: 'json',
+      header:{
+        'content-type':'application/json'
+      },
+      method: 'POST',
+      data: {
+        'keyword':that.search_text
+      },
+      success: function(response){
+        console.log(response.data)
+        for(var index in response.data.result){
+          that.result_list.push(response.data.result[index])
+        }
+      }
+      
+    })
+  }
+}
+</script>

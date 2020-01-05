@@ -12,69 +12,69 @@
         <text class="title2">今日推荐</text>
         <my-divider content=""></my-divider>
         <div class="recommend_container">
-          <div class="recommend_item">
-            <image class="image" src="/Common/pork.png"></image>
-            <text style="text-align:center;">生切猪肉</text>   
+          <div ontouchend="gotoDetail(recommends[0])" class="recommend_item">
+            <image class="image" src="{{recommends[0].url}}"></image>
+            <text style="text-align:center;">{{recommends[0].name}}</text>   
           </div>   
-          <div class="recommend_item">
-            <image class="image" src="/Common/pork.png"></image>
-            <text style="text-align:center;">生切猪肉</text>  
+          <div ontouchend="gotoDetail(recommends[1])" class="recommend_item">
+            <image class="image" src="{{recommends[1].url}}"></image>
+            <text style="text-align:center;">{{recommends[1].name}}</text>  
           </div>
         </div>
         <div class="recommend_container">
-          <div class="recommend_item">
-            <image class="image" src="/Common/pork.png"></image>
-            <text style="text-align:center;">生切猪肉</text>   
+          <div ontouchend="gotoDetail(recommends[2])" class="recommend_item">
+            <image class="image" src="{{recommends[2].url}}"></image>
+            <text style="text-align:center;">{{recommends[2].name}}</text>   
           </div>   
-          <div class="recommend_item">
-            <image class="image" src="/Common/pork.png"></image>
-            <text style="text-align:center;">生切猪肉</text>  
+          <div ontouchend="gotoDetail(recommends[3])" class="recommend_item">
+            <image class="image" src="{{recommends[3].url}}"></image>
+            <text style="text-align:center;">{{recommends[3].name}}</text>  
           </div>
         </div>
         <div class="recommend_container">
-          <div class="recommend_item">
-            <image class="image" src="/Common/pork.png"></image>
-            <text style="text-align:center;">生切猪肉</text>   
+          <div ontouchend="gotoDetail(recommends[4])" class="recommend_item">
+            <image class="image" src="{{recommends[4].url}}"></image>
+            <text style="text-align:center;">{{recommends[4].name}}</text>   
           </div>   
-          <div class="recommend_item">
-            <image class="image" src="/Common/pork.png"></image>
-            <text style="text-align:center;">生切猪肉</text>  
+          <div ontouchend="gotoDetail(recommends[5])" class="recommend_item">
+            <image class="image" src="{{recommends[5].url}}"></image>
+            <text style="text-align:center;">{{recommends[5].name}}</text>  
           </div>
         </div>      
     </div>
     <my-divider content="不满意？不如自己找找？" color="#2d8cf0" line-color="#2d8cf0"></my-divider>
     <div ontouchend="gotoSearch" style="length:100%;">
-      <my-search-bar disabled="{{true}}" input-value="{{search_text}}" placeholder="搜索菜谱名"></my-search-bar>
+      <my-search-bar disabled="{{true}}" placeholder="搜索菜谱名"></my-search-bar>
     </div>
     <text class="title3">八大菜系</text>
     <div class="type_container">
     <div style="margin-left: auto;margin-right: auto;"> 
-    <div class="type_item">
+    <div id="粤菜" ontouchend="gotoList" class="type_item">
       <text class="button_text" style="background-color:#2d8cf0;">粤菜</text>
     </div>
-     <div class="type_item">
+     <div id="川菜" ontouchend="gotoList" class="type_item">
       <text class="button_text" style="background-color:#ed3f14;">川菜</text>
     </div>
-    <div class="type_item">
+    <div id="鲁菜" ontouchend="gotoList" class="type_item">
       <text class="button_text" style="background-color:#ff9900;">鲁菜</text>
     </div>
-    <div class="type_item">
+    <div id="苏菜" ontouchend="gotoList" class="type_item">
       <text class="button_text" style="background-color:#19be6b;">苏菜</text>
     </div>
     </div>
     </div>
     <div class="type_container">
     <div style="margin-left: auto;margin-right: auto;"> 
-    <div class="type_item">
+    <div id="浙菜" ontouchend="gotoList" class="type_item">
       <text class="button_text" style="background-color:#FFD700;">浙菜</text>
     </div>
-     <div class="type_item">
+     <div id="闽菜" ontouchend="gotoList" class="type_item">
       <text class="button_text" style="background-color:#FF7F50;">闽菜</text>
     </div>
-    <div class="type_item">
+    <div id="湘菜" ontouchend="gotoList" class="type_item">
       <text class="button_text" style="background-color:#BA55D3;">湘菜</text>
     </div>
-    <div class="type_item">
+    <div id="徽菜" ontouchend="gotoList" class="type_item">
       <text class="button_text" style="background-color:#FFC0CB;">徽菜</text>
     </div>
     </div>
@@ -119,7 +119,31 @@ export default {
         text: '个人信息',
         active: false
       },        
-    ]
+    ],
+    recommends: [{
+      url: '/Common/pork.png',
+      name: '生切猪肉'
+    },
+    {
+      url: '/Common/pork.png',
+      name: '生切猪肉'
+    },
+    {
+      url: '/Common/pork.png',
+      name: '生切猪肉'
+    },
+    {
+      url: '/Common/pork.png',
+      name: '生切猪肉'
+    },
+    {
+      url: '/Common/pork.png',
+      name: '生切猪肉'
+    },
+    {
+      url: '/Common/pork.png',
+      name: '生切猪肉'
+    },]
   },
   onInit () {
     // 设置标题栏
@@ -132,6 +156,19 @@ export default {
   gotoSearch() {
     router.push ({
       uri: '/Search'
+    })
+  },
+  gotoDetail(item){
+    router.push({
+      uri: '/Detail',
+      params: {title:item.name}
+    })
+  },
+  gotoList(e){
+    console.log(e._target.id)
+    router.push({
+      uri: '/Type',
+      params:{title:e._target.id}
     })
   }
 }
@@ -204,72 +241,4 @@ export default {
     flex-direction: column;
   }
 
-  /* 应用图标 */
-  #icon {
-    margin-top: 90px;
-    width: 134px;
-    height: 134px;
-    border-radius: 10px;
-    border: 1px solid #8d8d8d;
-  }
-
-  /* 应用名 */
-  #name {
-    margin-top: 20px;
-    font-size: 36px;
-    color: #000000;
-  }
-
-  /* 应用标签 */
-  #tags {
-    margin-top: 22px;
-    align-items: center;
-  }
-
-  .tag {
-    padding-left: 20px;
-    padding-right: 20px;
-    font-size: 28px;
-    color: #2a9700;
-  }
-
-  .gap {
-    font-size: 22px;
-    color: #b2b2b2;
-  }
-
-  /* 应用描述 */
-  #desc {
-    width: 650px;
-    margin-top: 40px;
-    line-height: 35px;
-    font-size: 25px;
-    color: #8d8d8d;
-  }
-
-  /* 应用详情 */
-  .detail {
-    width: 650px;
-    height: 90px;
-    border-bottom-width: 1px;
-    border-bottom-color: #f0f0f0;
-  }
-
-  .detail-first {
-    margin-top: 65px;
-    border-top-width: 1px;
-    border-top-color: #f0f0f0;
-  }
-
-  .detail-title {
-    width: 160px;
-    padding-left: 10px;
-    font-size: 25px;
-    color: #000000;
-  }
-
-  .detail-content {
-    font-size: 25px;
-    color: #8d8d8d;
-  }
 </style>

@@ -1,14 +1,58 @@
 <import name="my-button" src="apex-ui/components/button/index"></import>
 <import name="my-tabbar" src="apex-ui/components/tabbar/index"></import>
+<import name="my-search-bar" src="apex-ui/components/search-bar/index"></import>
+<import name="my-icon" src="apex-ui/components/icon/index"></import>
+<import name="my-fab-button" src="apex-ui/components/fab-button/index"></import>
+<import name="my-button" src="apex-ui/components/button/index"></import>
+
 <template>
   <!-- template里只能有一个根节点 -->
-  <div class="demo-page">
-    <text class="title">{{text}}</text>
+  <div class="page">
+    <text class="title">农商直销</text>
+    <div ontouchend="gotoSearch">
+      <my-search-bar disabled="{{true}}" input-value="{{search_text}}" onchange="searchInput" placeholder="搜索产品名"></my-search-bar>
+    </div>
+    <list class="tutorial-page" onscrollbottom="loadMoreData">
+      <block for="{{advertisement_list}}">
+        <list-item type="card" class="tutorial-page">
+          <div ontouchend="gotoAvertisement" class="card">
+            <image class="detail_image" src="{{$item.url}}"></image>
+            <div class="detail">
+              <text>{{$item.title}}</text>
+              <div class="auth_info">
+                <text>卖家：{{$item.author}}</text>
+                <div>
+                  <my-icon type="thumbs-up" size="28"></my-icon>
+                  <text>:{{$item.like_num}}</text>
+                </div>
+              </div>
+            </div>
+          </div>
+        </list-item>
+      </block>
+      <list-item type="loadMore">
+        <block if="{{page<maxPage}}">
+          <div class="load_more">
+            <progress type="circular"></progress>
+            <text>加载更多</text>
+          </div>
+        </block>
+        <block else>
+          <div class="load_more">
+            <text>已无更多</text>
+          </div>
+        </block>    
+      </list-item>
+    </list>
     <my-tabbar tabbar="{{tabbarData}}"></my-tabbar>
+    <div if="{{isLogin}}" class="create_button">
+      <my-button ontap="createPost" type="info" shape="circle" inline="true" icon="add"></my-button>
+    </div>
   </div>
 </template>
 
 <script>
+import router from '@system.router'
 export default {
   private: {
     text: '欢迎打开详情页',
@@ -33,27 +77,82 @@ export default {
         text: '个人信息',
         active: false
       },        
-    ]
+    ],
+    advertisement_list:[{
+      title:'正宗甘肃苹果啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
+      url: '/Common/apple.png',
+      author: '刘冬阳',
+      like_num: 999
+    }],
+    isLogin: true
   },
-  /**
-   * 当用户点击菜单按钮时触发，调用app中定义的方法showMenu
-   * 注意：使用加载器测试`创建桌面快捷方式`功能时，请先在`系统设置`中打开`应用加载器`的`桌面快捷方式`权限
-   */
-  onMenuPress() {
-    this.$app.$def.showMenu()
+  gotoSearch() {
+    router.push({
+      uri:'/SearchProduct'
+    })
+  },
+  createPost(){
+    router.push({
+      uri:'/CreatePost'
+    })
   }
 }
 </script>
 
 <style>
-  .demo-page {
+  .page {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
 
   .title {
     font-size: 40px;
     text-align: center;
+    padding: 40px 20px 15px;
+    color: #ffffff;
+    font-weight: bolder;
+    background-color: #09ba07;
+  }
+  .tutorial-page {
+    width: 100%;
+    flex-direction: column;
+    background-color: #f8f8f9;
+  }
+  .detail_image {
+    height: 160px;
+    margin: 20px;
+  }
+  .detail {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 15px;
+    font-size: 32px;
+    flex-direction: column;
+    justify-content: space-between;
+    }
+  .card {
+    margin: 20px;
+    width: 90%;
+    height: 200px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .auth_info {
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 20px; 
+  }
+  .load_more {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+  }
+  .create_button{
+    right: 20px;
+    bottom: 100px;
+    position: fixed;
+    margin-right: 20px;
+    margin-bottom: 20px; 
   }
 </style>

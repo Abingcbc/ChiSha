@@ -3,7 +3,7 @@
   "name": "what-to-eat",
   "versionName": "1.0.0",
   "versionCode": "1",
-  "minPlatformVersion": "1020",
+  "minPlatformVersion": "1030",
   "icon": "/Common/logo.png",
   "features": [
     {
@@ -22,10 +22,10 @@
     }
   ],
   "config": {
-    "logLevel": "off"
+    "logLevel": "debug"
   },
   "router": {
-    "entry": "Login",
+    "entry": "Price",
     "pages": {
       "Price": {
         "component": "index"
@@ -49,6 +49,24 @@
         "component": "index"
       },
       "SearchMaterial": {
+        "component": "index"
+      },
+      "Detail": {
+        "component": "index"
+      },
+      "MenuList": {
+        "component": "index"
+      },
+      "Type": {
+        "component": "index"
+      },
+      "SearchProduct": {
+        "component": "index"
+      },
+      "Post": {
+        "component": "index"
+      },
+      "CreatePost": {
         "component": "index"
       }
     },
@@ -74,26 +92,50 @@
       "Search": {
         "titleBar": true,
         "titleBarText": "搜索",
-        "titleBarBackgroundColor":"#09ba07",
-        "titleBarTextColor":"#ffffff"
+        "titleBarBackgroundColor": "#09ba07",
+        "titleBarTextColor": "#ffffff"
       },
       "Login": {
         "titleBar": true,
         "titleBarText": "登陆",
-        "titleBarBackgroundColor":"#09ba07",
-        "titleBarTextColor":"#ffffff"
+        "titleBarBackgroundColor": "#09ba07",
+        "titleBarTextColor": "#ffffff"
       },
       "Register": {
         "titleBar": true,
         "titleBarText": "注册",
-        "titleBarBackgroundColor":"#09ba07",
-        "titleBarTextColor":"#ffffff"
+        "titleBarBackgroundColor": "#09ba07",
+        "titleBarTextColor": "#ffffff"
       },
       "SearchMaterial": {
         "titleBar": true,
         "titleBarText": "搜索",
-        "titleBarBackgroundColor":"#09ba07",
-        "titleBarTextColor":"#ffffff"
+        "titleBarBackgroundColor": "#09ba07",
+        "titleBarTextColor": "#ffffff"
+      },
+      "Detail": {
+        "titleBarText": ""
+      },
+      "MenuList": {
+        "titleBarText": ""
+      },
+      "Type": {
+        "titleBarText": ""
+      },
+      "SearchProduct": {
+        "titleBar": true,
+        "titleBarText": "搜索",
+        "titleBarBackgroundColor": "#09ba07",
+        "titleBarTextColor": "#ffffff"
+      },
+      "Post": {
+        "titleBarText": ""
+      },
+      "CreatePost": {
+        "titleBar": true,
+        "titleBarText": "创建销售帖",
+        "titleBarBackgroundColor": "#09ba07",
+        "titleBarTextColor": "#ffffff"
       }
     }
   }

@@ -1,0 +1,111 @@
+<import name="my-search-bar" src="apex-ui/components/search-bar/index"></import>
+<template>
+    <div class="page">
+      <div style="flex-direction: row;">
+        <div style="width:80%">
+            <my-search-bar onchange="bindSearch" cancel-text="X" placeholder="搜索商品名"></my-search-bar>
+        </div>
+        <text ontouchend="search" class="button_text">搜索</text>
+      </div>
+      <list class="tutorial-page">
+        <block for="{{result_list}}">
+          <list-item type="card" class="tutorial-page">
+          <div ontouchend="gotoAvertisement" class="card">
+            <image class="detail_image" src="{{$item.url}}"></image>
+            <div class="detail">
+              <text>{{$item.title}}</text>
+              <div class="auth_info">
+                <text>卖家：{{$item.author}}</text>
+                <div>
+                  <my-icon type="thumbs-up" size="28"></my-icon>
+                  <text>:{{$item.like_num}}</text>
+                </div>
+              </div>
+            </div>
+          </div>
+          </list-item>
+        </block> 
+        <list-item type="loadMore">
+          <block if="{{page<maxPage}}">
+            <div class="load_more">
+              <progress type="circular"></progress>
+              <text>加载更多</text>
+            </div>
+          </block>
+          <block else>
+            <div class="load_more">
+              <text>已无更多</text>
+            </div>
+          </block>    
+        </list-item> 
+      </list>
+    </div>
+</template>
+<style>
+    .button_text {
+      margin-left: 20px;
+      font-size: 30px;
+      color: #80848f;
+    }
+    .page {
+      flex-direction: column;
+      background-color: #f8f8f9
+    }
+    .tutorial-page {
+      width: 100%;
+      flex-direction: column;
+      background-color: #f8f8f9;
+    }
+    .background {
+      background-color: #f8f8f9;
+      flex-direction: column;
+    }
+    .load_more {
+      margin-left: auto;
+      margin-right: auto;
+      padding: 10px;
+    }
+  .tutorial-page {
+    width: 100%;
+    flex-direction: column;
+    background-color: #f8f8f9;
+  }
+  .detail_image {
+    height: 160px;
+    margin: 20px;
+  }
+  .detail {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 15px;
+    font-size: 32px;
+    flex-direction: column;
+    justify-content: space-between;
+    }
+  .card {
+    margin: 20px;
+    width: 90%;
+    height: 200px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .auth_info {
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 20px; 
+  }
+</style>
+<script>
+export default{
+  private: {
+    result_list:[{
+      title:'正宗甘肃苹果啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
+      url: '/Common/apple.png',
+      author: '刘冬阳',
+      like_num: 999
+    }]
+  },
+}
+</script>

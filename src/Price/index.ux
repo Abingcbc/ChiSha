@@ -2,6 +2,7 @@
 <import name="my-tabbar" src="apex-ui/components/tabbar/index"></import>
 <import name="my-search-bar" src="apex-ui/components/search-bar/index"></import>
 <import name="my-card" src="apex-ui/components/card/index"></import>
+<import name="my-divider" src="apex-ui/components/divider/index"></import>
 
 <template>
   <!-- template里只能有一个根节点 -->
@@ -11,13 +12,35 @@
       <my-search-bar disabled="{{true}}" input-value="{{search_text}}" onchange="searchInput" placeholder="搜索食材名"></my-search-bar>
     </div>
     <list class="tutorial-page" onscrollbottom="loadMoreData">
-      <block for="{{view_list}}">
+      <block for="{{ingredient_list}}">
         <list-item type="card" class="tutorial-page">
-          <my-card title="{{$item.name}}" thumb="{{$item.url}}" extra="今日价格：￥{{$item.price}}">
-            <text>{{search_text}}</text>
+          <my-card title="{{$item.ingredientName}}" thumb="/Common/{{$item.ingredientName}}.png" extra="今日价格：￥{{$item.todayPrice}}">
+            <div class="sub_detail">
+              <div style="flex-direction:column;">
+                <text>此周平均：</text>
+                <text>此月平均：</text>
+              </div>
+              <div style="flex-direction:column;">
+                <text>￥{{$item.weekAveragePrice}}</text>
+                <text>￥{{$item.monthAveragePrice}}</text>
+              </div>
+          </div>
           </my-card>
         </list-item>
       </block>
+      <list-item type="loadMore">
+        <block if="{{page<maxPage}}">
+          <div class="load_more">
+            <progress type="circular"></progress>
+            <text>加载更多</text>
+          </div>
+        </block>
+        <block else>
+         <div class="load_more">
+            <text>已无更多</text>
+          </div>
+        </block>    
+      </list-item>
     </list>
     <my-tabbar tabbar="{{tabbarData}}"></my-tabbar>
     </div>
@@ -25,9 +48,8 @@
 
 <script>
 import router from '@system.router'
-
+import fetch from '@system.fetch'
 export default {
-  // 页面级组件的数据模型，影响传入数据的覆盖机制：private内定义的属性不允许被覆盖
   private: {
     title: 'what-to-eat',
     tabbarData: [
@@ -55,27 +77,27 @@ export default {
     ingredient_list:[],
     view_list:[],
     search_text:'',
-    isFixed:false
+    isFixed:false,
+    loadAll:false,
+    page:0,
+    maxPage:0
   },
   onInit() {
-    for(var i=0;i<10;++i){
-      this.ingredient_list.push({
-        name: '猪肉',
-        description: 'pork is a kind of meat',
-        url:'/Common/pork.png',
-        price: '21'
-      })
-      this.view_list=this.ingredient_list
-    }
+    var that=this
+    fetch.fetch({
+      url:'http://10.0.1.34:8086/price/get-list?page-num=1&&page-size=4',
+      responseType: 'json',
+      success: function(response){
+        for(var index in response.data.list){
+          that.ingredient_list.push(response.data.list[index])
+        }
+        that.page=response.data.pageNum
+        that.maxPage=response.data.pages
+      }
+    })
+    
   },
   onReady() {
-    var header=this.$element('searchBar')
-  },
-  routeDetail () {
-    // 跳转到应用内的某个页面，router用法详见：文档->接口->页面路由
-    router.push ({
-      uri: '/Advertisement'
-    })
   },
   searchInput(e){
     this.search_text=e.detail.event.value
@@ -95,6 +117,26 @@ export default {
   gotoSearch() {
     router.push({
       uri: '/SearchMaterial'
+    })
+  },
+  loadMoreData() {
+    var that=this
+    if(that.page===that.maxPage){
+      return
+    }
+    var newPage=that.page+1
+    console.log('load')
+    fetch.fetch({
+      url:'http://10.0.1.34:8086/price/get-list?page-num='+String(newPage)+'&&page-size=4',
+      responseType: 'json',
+      success: function(response){
+        for(var index in response.data.list){
+          console.log(response.data.list[index])
+          that.ingredient_list.push(response.data.list[index])
+        }
+        that.page=response.data.pageNum
+      }
+
     })
   }
 }
@@ -139,11 +181,21 @@ export default {
     background-color: #f8f8f9;
     flex-direction: column;
   }
-
+  .sub_detail {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
   .headerFixed{
 	position: fixed;
 	top:0px;
 	left:0px;
 	right:0px;
   }	
+
+  .load_more {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+  }
 </style>

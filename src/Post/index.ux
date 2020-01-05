@@ -1,0 +1,75 @@
+<import name="my-icon" src="apex-ui/components/icon/index"></import>
+<template>
+  <div class="page">
+    <image class="title_image" src="{{info.url}}"></image>
+    <text class="title_text">{{info.title}}</text>
+    <text class="subtitle_text">商品描述：</text>
+    <text class="content">{{info.description}}</text>
+    <text class="subtitle_text">联系方式（手机/邮箱）：{{info.phone}}</text>
+    <div ontouchend="like" class="like">
+      <text style="color:{{like_color}}" class="like_text">:{{like_number}}</text>
+      <my-icon color="{{like_color}}" type="thumbs-up" size="48"></my-icon>
+    </div>
+  </div>
+</template>
+<style>
+  .page {
+    flex-direction: column;
+    background-color: #f8f8f9
+  }
+  .title_image {
+    width: 100%;
+  }
+  .title_text {
+    text-align: center;
+    font-size: 50px;
+    color: #1c2438;
+    margin: 40px;
+  }
+  .subtitle_text {
+    margin-left: 30px;
+    font-size: 30px;
+    color: #495060;
+  }
+  .content {
+    margin-right: 30px;
+    margin-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 25px;
+    color: #80848f; 
+  }
+  .like {
+    flex-direction: row-reverse;
+    margin: 30px 20px;
+  }
+  .like_text {
+    font-size: 30px
+  }
+</style>
+<script>
+export default{
+  private: {
+    info:{
+      title:'陕西苹果',
+      url: '/Common/apple.png',
+      description: '收i和此时此刻出库单内存带宽的才能生存的v你的女款的v那肯定是v尼克斯的v你从电视里充满了蔬菜沙拉催眠术催眠',
+      phone:'123456'
+    },
+    like_status: false,
+    like_number: 999,
+    like_color: '#495060'
+  },
+  like(){
+    if(this.like_status){
+      this.like_status=false
+      this.like_number-=1
+      this.like_color='#495060'
+    }else{
+      this.like_status=true
+      this.like_number+=1
+      this.like_color='#ed3f14'
+    }
+  }
+}
+</script>

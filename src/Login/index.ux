@@ -4,13 +4,13 @@
 <template>
     <div class="page">
         <div class="input_block">
-            <my-input value="{{ value1 }}" title="账号" autofocus="true" placeholder="手机号"></my-input>
-            <my-input value="{{ value1 }}" type="password" title="密码" autofocus="true" placeholder="密码"></my-input>       
+            <my-input value="{{phone_number}}" title="账号" type="number" autofocus="true" placeholder="手机号"></my-input>
+            <my-input value="{{password }}" type="password" title="密码" autofocus="true" placeholder="密码"></my-input>       
         </div>
         <my-button type="success">登陆</my-button>
         <div class="registe_block">
             <text style="color:#495060;font-size:30px;">没有账号？</text>
-            <text style="color:#5cadff;font-size:30px;">立即注册</text>
+            <text ontouchend="gotoRegiste" style="color:#5cadff;font-size:30px;">立即注册</text>
         </div>
     </div>
     
@@ -32,5 +32,16 @@
   }
 </style>
 <script>
-
+import router from '@system.router'
+export default {
+  private: {
+    phone_number: 0,
+    password: ''
+  },
+  gotoRegiste(){
+    router.push({
+      uri:"/Register"
+    })
+  }
+}
 </script>

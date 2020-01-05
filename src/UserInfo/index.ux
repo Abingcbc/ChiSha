@@ -3,12 +3,23 @@
 <import name="my-avatar" src="apex-ui/components/avatar/index"></import>
 
 <template>
-    <div>
-        <div if="{{isLogin}}" class="page">
-          
+    <div class="out_page">
+        <text class="title">菜谱推荐</text>
+        <div if="{{isLogin}}" class="page2">
+          <text class="title2">用户信息</text>
+          <div class="content">
+            <text class="content_text">用户名：</text>
+            <text class="content_text">性别：</text>
+            <text class="content_text">地域：</text>
+            <text class="content_text">年龄：</text>
+            <text class="content_text">手机号：</text>
+            <text class="content_text">邮箱：</text>
+            <text class="content_text">偏好口味：</text>
+            <text class="content_text">偏好菜系：</text>
+          </div>
+          <my-button ontap="logout" type="error">注销</my-button>
         </div>
-        <div else class="page">
-          <text class="title">菜谱推荐</text>
+        <div else class="page">  
           <text class="info_text">尚未登陆，请先登陆</text>
           <my-button ontap="login" type="success">登陆</my-button>
           <text class="info_text">如无账号，请先注册</text>
@@ -18,9 +29,15 @@
     </div>
 </template>
 <style>
+    .out_page {
+      flex-direction: column;
+    }
     .page {
         flex-direction: column;
         margin: auto;
+    }
+    .page2 {
+      flex-direction: column;
     }
     .info_text {
       font-size: 40px;
@@ -35,6 +52,19 @@
     color: #ffffff;
     font-weight: bolder;
     background-color: #09ba07;
+  }
+  .title2 {
+    font-size: 30px;
+    text-align: center;
+    padding: 40px 20px 15px;
+  }
+  .content {
+    flex-direction: column;
+    padding: 0px 30px;
+  }
+  .content_text {
+    font-size: 30px;
+    margin: 10px 0px;
   }
 </style>
 <script>
@@ -64,7 +94,7 @@ export default {
         active: true
       },        
     ],
-    isLogin: false
+    isLogin: true
   },
   login() {
     router.push({
@@ -75,6 +105,9 @@ export default {
     router.push({
       uri: '/Register'
     })
+  },
+  logout(){
+    this.isLogin=false
   }
 }
 </script>
