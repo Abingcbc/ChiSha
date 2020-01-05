@@ -2,6 +2,8 @@ package org.sse.recommendservice.dto;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 /**
  * @author cbc
  */
@@ -12,4 +14,5 @@ public class BrowsingPlus {
     private long age;
     private long bornPlace;
     private long recipeId;
+    private Timestamp browseTime;
 }

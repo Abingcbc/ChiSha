@@ -16,6 +16,7 @@ import org.supercsv.prefs.CsvPreference;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -44,6 +45,15 @@ public class RecommendService {
         }
     }
 
+    private List<String> convertLongList2StringList(List<Long> longList) {
+        List<String> stringList = new ArrayList<>();
+        Collections.reverse(longList);
+        for (long l: longList) {
+            stringList.add(String.valueOf(l));
+        }
+        return stringList;
+    }
+
     public String getTrainData(int limitNum) {
         List<BrowsingPlus> browsingPlusArrayList = userRelatedMapper.getRecentBrowsingHistory(limitNum);
         Set<Long> userIdSet = new HashSet<>();
@@ -54,7 +64,6 @@ public class RecommendService {
         }
         Map<Long, QueryResult> styleMap = userRelatedMapper.getUserPreferStyleBatch(userIdSet);
         Map<Long, QueryResult> tasteMap = userRelatedMapper.getUserPreferTasteBatch(userIdSet);
-        Map<Long, QueryResult> recordMap = userRelatedMapper.getUserBrowsingBatch(userIdSet);
         Map<Long, QueryResult> recipeStyleMap = recipeRelatedMapper.getRecipeStyleBatch(recipeIdSet);
         Map<Long, QueryResult> recipeTasteMap = recipeRelatedMapper.getRecipeTasteBatch(recipeIdSet);
         Map<Long, QueryResult> recipeIngredientMap = recipeRelatedMapper.getRecipeIngredientBatch(recipeIdSet);
@@ -81,7 +90,7 @@ public class RecommendService {
                         browsing.getBornPlace(),
                         styleMap.getOrDefault(browsing.getUserId(), new QueryResult()).getValue(),
                         tasteMap.getOrDefault(browsing.getUserId(), new QueryResult()).getValue(),
-                        recordMap.getOrDefault(browsing.getUserId(), new QueryResult()).getValue(),
+                        String.join("|", convertLongList2StringList(userRelatedMapper.getUserBrowsingBefore(browsing.getUserId(), browsing.getBrowseTime()))),
                         browsing.getRecipeId(),
                         recipeStyleMap.getOrDefault(browsing.getRecipeId(), new QueryResult()).getValue(),
                         recipeTasteMap.getOrDefault(browsing.getRecipeId(), new QueryResult()).getValue(),
@@ -110,12 +119,12 @@ public class RecommendService {
         User user = userRelatedMapper.getUserById(userId);
         Map<Long, QueryResult> style = userRelatedMapper.getUserPreferStyleBatch(Sets.newHashSet(userId));
         Map<Long, QueryResult> taste = userRelatedMapper.getUserPreferTasteBatch(Sets.newHashSet(userId));
-        Map<Long, QueryResult> history = userRelatedMapper.getUserBrowsingBatch(Sets.newHashSet(userId));
 
         return new UserTrainField(user.getGender(), user.getAge(), user.getBornPlace(),
                 style.getOrDefault(userId, new QueryResult()).getValue(),
                 taste.getOrDefault(userId, new QueryResult()).getValue(),
-                history.getOrDefault(userId, new QueryResult()).getValue());
+                String.join("|",
+                        convertLongList2StringList(userRelatedMapper.getUserBrowsingBefore(userId, new Timestamp(System.currentTimeMillis())))));
     }
 
     public RecommendRecipe getRecommendRecipe(List<Long> idList) {
@@ -147,10 +156,10 @@ public class RecommendService {
             writer.writeHeader(header);
             for (Long id: idList) {
                 List<Object> record = Arrays.asList(
-                        id, recipeStyleMap.get(id).getValue(),
-                        recipeTasteMap.get(id).getValue(),
-                        recipeIngredientMap.get(id).getValue(),
-                        recipeSeasoningMap.get(id).getValue()
+                        id, recipeStyleMap.getOrDefault(id, new QueryResult()).getValue(),
+                        recipeTasteMap.getOrDefault(id, new QueryResult()).getValue(),
+                        recipeIngredientMap.getOrDefault(id, new QueryResult()).getValue(),
+                        recipeSeasoningMap.getOrDefault(id, new QueryResult()).getValue()
                 );
                 writer.write(record);
             }

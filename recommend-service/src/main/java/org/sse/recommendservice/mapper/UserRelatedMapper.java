@@ -9,6 +9,7 @@ import org.sse.recommendservice.dto.BrowsingPlus;
 import org.sse.recommendservice.dto.QueryResult;
 import org.sse.recommendservice.model.User;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,7 +28,7 @@ public interface UserRelatedMapper {
      */
     @Select("with recent_browsing as (select * from browsing_history\n" +
             "order by browse_time desc limit #{num})\n" +
-            "select user_id, gender, age, born_place, recipe_id\n" +
+            "select user_id, gender, age, born_place, recipe_id, browse_time\n" +
             "from recent_browsing\n" +
             "left join user using (user_id);")
     List<BrowsingPlus> getRecentBrowsingHistory(@Param("num") int limitNum);
@@ -72,25 +73,12 @@ public interface UserRelatedMapper {
     })
     Map<Long, QueryResult> getUserPreferTasteBatch(@Param("idList") Set<Long> idList);
 
-    /**
-     *
-     * @param idList
-     * @return
-     */
-    @MapKey("id")
-    @Select({
-            "<script>" +
-                    "select user_id as id, substring_index(GROUP_CONCAT(recipe_id ORDER BY browse_time desc SEPARATOR '|'), '|', 20)" +
-                    " as value\n" +
-                    "from browsing_history\n" +
-                    "where user_id in \n" +
-                    "<foreach item = 'item' index = 'index' collection = 'idList' open='(' separator=',' close=')'>" +
-                    "${item}" +
-                    "</foreach>" +
-                    "group by user_id;" +
-                    "</script>"
-    })
-    Map<Long, QueryResult> getUserBrowsingBatch(@Param("idList") Set<Long> idList);
+    @Select("select recipe_id\n" +
+            "from browsing_history\n" +
+            "where user_id = #{userId} and browse_time < #{browseTime}\n" +
+            "order by browse_time desc")
+    List<Long> getUserBrowsingBefore(@Param("userId") Long userId,
+                                     @Param("browseTime")Timestamp browseTime);
 
     /**
      *
