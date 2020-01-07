@@ -5,21 +5,25 @@
 <import name="my-checkbox-group" src="apex-ui/components/checkbox-group/index"></import>
 <import name="my-checkbox" src="apex-ui/components/checkbox/index"></import>
 <import name="my-switch" src="apex-ui/components/switch/index"></import>
+<import name="my-toast" src="apex-ui/components/toast/index"></import>
 
 <template>
     <div class="page">
       <div class="input_block">
-        <my-input onchange="bindUsername" title="用户名" autofocus="true" placeholder="用户名"></my-input>
-        <my-input onchange="bindPhone" title="手机号" type="number" autofocus="true" placeholder="手机号"></my-input>
-        <my-input onchange="bindMail" title="邮箱" autofocus="true" placeholder="邮箱"></my-input>
-        <my-input onchange="bindPassword" type="password" title="密码" autofocus="true" placeholder="密码"></my-input>
-        <my-input onchange="bindConfirmPassword" type="password" title="确认密码" autofocus="true" placeholder="确认密码"></my-input>
-        <my-input onchange="bindAge" title="年龄" type="number" autofocus="true" placeholder="年龄"></my-input>
-          <text style="margin-left:20px; margin-top:15px;">性别：</text>
-          <div style=" padding-left:20px; padding-top:15px;">
-          <my-switch onchange="bindSwitch" open="男" close="女"></my-switch>
-          </div>
-        <text style="margin-left:20px; margin-top:15px;">偏好菜系：</text>
+        <my-input onchange="bindUsername" title="用户名" placeholder="用户名"></my-input>
+        <text show={{phone_show}} class="warning">请输入合法手机号</text>
+        <my-input onchange="bindPhone" title="手机号" type="number" placeholder="手机号"></my-input>
+        <text show={{mail_show}} class="warning">请输入合法邮箱</text>
+        <my-input onchange="bindMail" title="邮箱" placeholder="邮箱"></my-input>
+        <my-input onchange="bindPassword" type="password" title="密码" placeholder="密码"></my-input>
+        <text show={{confirmpassword_show}} class="warning">密码不一致</text>
+        <my-input onchange="bindConfirmPassword" type="password" title="确认密码" placeholder="确认密码"></my-input>
+        <my-input onchange="bindAge" title="年龄" type="number" placeholder="年龄"></my-input>
+        <text class="sub_title">性别：</text>
+        <div style=" padding-left:20px; padding-top:15px;">
+        <my-switch onchange="bindSwitch" open="男" close="女"></my-switch>
+        </div>
+        <text class="sub_title">偏好菜系：</text>
         <div class="checkbox_row">
           <label target="1" >粤菜:</label>
           <input id="1" onchange="bindType" type="checkbox"></input>
@@ -41,7 +45,7 @@
           <label target="8" class="flex_grow">徽菜:</label>
           <input id="8" onchange="bindType" type="checkbox"></input>
         </div>
-        <text style="margin-left:20px; margin-top:15px;">偏好口味：</text>
+        <text class="sub_title">偏好口味：</text>
         <div class="checkbox_row">
           <label target="9" >酸:</label>
           <input id="9" onchange="bindTaste" type="checkbox"></input>
@@ -64,6 +68,7 @@
         </div>
         <my-button ontap="complete" type="success">注册</my-button>
       </div>
+      <my-toast id="toast"></my-toast>
     </div>
 </template>
 <style>
@@ -96,7 +101,18 @@
     margin-left: auto;
     margin-right: auto;
   }
-
+  .sub_title{
+    margin-left:20px; 
+    margin-top:15px;
+    margin-bottom: 10px;
+    color: #495060;
+  }
+  .warning {
+    margin-left:20px; 
+    margin-top:15px;
+    margin-bottom: 10px;
+    color: #ed3f14;
+  }
 </style>
 
 <script>
@@ -119,10 +135,25 @@ export default {
       '山东省','河南省','湖北省','湖南省','广东省','海南省','四川省','贵州省','云南省',
       '陕西省','甘肃省','青海省','台湾省','内蒙古自治区','广西壮族自治区','西藏自治区',
       '宁夏回族自治区','新疆维吾尔自治区','香港特别行政区','澳门特别行政区'
-    ]
+    ],
+    phone_show: false,
+    mail_show: false,
+    confirmpassword_show: false
   },
   complete(){
     var that=this
+    if(that.username===''||that.phone===''||that.mail===''||that.age===''||that.password===''||that.confirmPassword===''){
+      this.$child('toast').showToast({
+        content: '必填信息不得为空',
+         type: 'error'
+      });
+    }
+    if(that.phone_show||that.mail_show||that.confirmpassword_show){
+      this.$child('toast').showToast({
+        content: '用户信息有误',
+         type: 'error'
+      });
+    }
     fetch.fetch({
       url:'http://10.0.1.34:8001/register',
       method: 'Post',
@@ -157,15 +188,30 @@ export default {
   },
   bindPhone(e){
     this.phone=e.detail.value
+    if(!this.isPhoneAvailable(this.phone)){
+      this.phone_show=true
+    }else{
+      this.phone_show=false
+    }
   },
   bindMail(e){
     this.mail=e.detail.value
+     if(!this.isEMailAvailable(this.mail)){
+      this.mail_show=true
+    }else{
+      this.mail_show=false
+    }
   },
   bindPassword(e){
     this.password=e.detail.value
   },
   bindConfirmPassword(e){
     this.confirmPassword=e.detail.value
+    if(this.confirmPassword!=this.password){
+      this.confirmpassword_show=true
+    }else{
+      this.confirmpassword_show=false
+    }
   },
   bindAge(e){
     this.age=e.detail.value
@@ -203,6 +249,22 @@ export default {
       this.gender=0
     }else{
       this.gender=1
+    }
+  },
+  isPhoneAvailable(poneInput) {
+    var myreg=/^[1][3,4,5,7,8][0-9]{9}$/
+    if (!myreg.test(poneInput)) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+  isEMailAvailable(emailInput) {
+    var myreg= /^([a-zA-Z0-9]+[_]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
+    if (!myreg.test(emailInput)) {
+      return false;
+    } else {
+      return true;
     }
   }
 }

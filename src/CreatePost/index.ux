@@ -62,6 +62,7 @@
     width: 100%;
     height: 200px;
   }
+
 </style>
 <script>
 import media from '@system.media'
@@ -142,6 +143,7 @@ export default{
   delete(){
     this.url='/Common/upload.png'
     this.isuploaded=false
-  }
+  },
+
 }
 </script>
