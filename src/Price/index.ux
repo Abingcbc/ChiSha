@@ -14,7 +14,7 @@
     <list class="tutorial-page" onscrollbottom="loadMoreData">
       <block for="{{ingredient_list}}">
         <list-item type="card" class="tutorial-page">
-          <my-card title="{{$item.ingredientName}}" thumb="/Common/{{$item.ingredientName}}.png" extra="今日价格：￥{{$item.todayPrice}}">
+          <my-card title="{{$item.ingredientName}}" thumb="{{$item.ingredientImage}}" extra="今日价格：￥{{$item.todayPrice}}">
             <div class="sub_detail">
               <div style="flex-direction:column;">
                 <text>此周平均：</text>

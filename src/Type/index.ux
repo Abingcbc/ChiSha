@@ -6,11 +6,11 @@
         <my-search-bar disabled="{{true}}" placeholder="搜索菜谱名"></my-search-bar>
       </div>
       <list class="tutorial-page" onscrollbottom="loadMoreData">
-        <block for="{{search_list}}">
+        <block for="{{result_list}}">
           <list-item type="card" class="tutorial-page">
-            <div class="card">
-              <image class="detail_image" src="/Common/pork.png"></image>
-              <text class="detail_text">生切猪肉</text>
+            <div ontouchend="gotoDetail($item)" class="card">
+              <image class="detail_image" alt="/Common/404.jpeg" src="{{$item.recipeImage}}"></image>
+              <text class="detail_text">{{$item.recipeName}}</text>
             </div>
           </list-item>
         </block>
@@ -71,6 +71,7 @@
 
     .detail_image {
       height: 160px;
+      width: 200px;
       margin: 20px;
     }
     .load_more {
@@ -81,18 +82,88 @@
 </style>
 <script>
 import router from '@system.router'
+import fetch from '@system.fetch'
+import storage from '@system.storage'
 export default{
   protected: {
-    title: ''
+    id:'0',
+    title:''
   },
   private: {
     page: 0,
-    maxPage: 10
+    maxPage: 0,
+    result_list:[],
+    userId: 0,
+    isLogin:false
+  },
+  onInit() {
+    var that=this
+    that.result_list=[]
+    storage.get({
+      key:'id',
+      success: function(data){
+        console.log(data)
+        if(data!==''){
+          that.isLogin=true
+          that.userId=data
+        }
+        else{
+          that.isLogin=false
+        }
+      },
+      fail: function(data,code){
+        console.log(data,code)
+      }
+    })
+    fetch.fetch({
+      url:'http://10.0.1.34:8085/recipe/get-list-by-style/'+that.id+'?page-num=1&&page-size=5',
+      responseType: 'json',
+      header:{
+        'content-type':'application/json'
+      },
+      success: function(response){
+        console.log(response.data)
+        for(var index in response.data.list){
+          that.result_list.push(response.data.list[index])
+        }
+        that.page=response.data.pageNum
+        that.maxPage=response.data.pages
+      }
+    })
   },
   gotoSearch() {
     router.push ({
       uri: '/Search'
     })
   },
+  loadMoreData(){
+    var that=this
+    if(that.page===that.maxPage){
+      return
+    }
+    var newPage=that.page+1
+    fetch.fetch({
+      url:'http://10.0.1.34:8085/recipe/get-list-by-style/'+that.id+'?page-num='+String(newPage)+'&&page-size=5',
+      responseType: 'json',
+      success: function(response){
+        for(var index in response.data.list){
+          console.log(response.data.list[index])
+          that.result_list.push(response.data.list[index])
+        }
+        that.page=response.data.pageNum
+      }
+    })
+  },
+  gotoDetail(item){
+    var that=this
+    router.push({
+      uri: '/Detail',
+      params:{
+        id:item.recipeId,
+        userId: that.userId,
+        isLogin: that.isLogin
+      }
+    })  
+  }
 }
 </script>

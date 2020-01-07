@@ -25,7 +25,7 @@
     "logLevel": "debug"
   },
   "router": {
-    "entry": "Price",
+    "entry": "CreatePost",
     "pages": {
       "Price": {
         "component": "index"

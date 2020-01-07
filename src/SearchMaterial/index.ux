@@ -12,7 +12,7 @@
       <list class="tutorial-page">
         <block for="{{result_list}}">
           <list-item type="card" class="tutorial-page">
-            <my-card title="{{$item.ingredientName}}" thumb="/Common/{{$item.ingredientName}}.png" extra="今日价格：￥{{$item.todayPrice}}">
+            <my-card title="{{$item.ingredientName}}" thumb="{{$item.ingredientImage}}" extra="今日价格：￥{{$item.todayPrice}}">
               <div class="sub_detail">
                 <div style="flex-direction:column;">
                   <text>此周平均：</text>
@@ -27,10 +27,10 @@
           </list-item>
         </block> 
         <list-item type="loadMore">
-          <block if="{{page<maxPage}}">
+          <block if="{{isloading}}">
             <div class="load_more">
               <progress type="circular"></progress>
-              <text>加载更多</text>
+              <text>正在加载</text>
             </div>
           </block>
           <block else>
@@ -78,6 +78,7 @@ export default {
   private: {
     search_text:'',
     result_list:[],
+    isloading: false
   },
   onInit() {
   },
@@ -87,6 +88,7 @@ export default {
   search() {
     var that=this
     that.result_list=[]
+    that.isloading=true
     fetch.fetch({
       url:'http://10.0.1.34:8086/price/get-list-by-name',
       responseType: 'json',
@@ -102,8 +104,13 @@ export default {
         for(var index in response.data.result){
           that.result_list.push(response.data.result[index])
         }
+      },
+      fail: function(response){
+        console.log(response)
+      },
+      complete: function(response){
+        that.isloading=false
       }
-      
     })
   }
 }
