@@ -1,5 +1,6 @@
 <import name="my-search-bar" src="apex-ui/components/search-bar/index"></import>
 <import name="my-card" src="apex-ui/components/card/index"></import>
+<import name="my-spin" src="apex-ui/components/spin/index"></import>
 
 <template>
     <div class="page">
@@ -9,6 +10,7 @@
         </div>
         <text ontouchend="search" class="button_text">搜索</text>
       </div>
+      <my-spin loading="{{loading}}"></my-spin>
       <list class="tutorial-page">
         <block for="{{result_list}}">
           <list-item type="card" class="tutorial-page">
@@ -78,19 +80,22 @@ export default {
   private: {
     search_text:'',
     result_list:[],
-    isloading: false
+    isloading: false,
+    loading: true
   },
-  onInit() {
+  onShow() {
+    this.loading=false
   },
   bindSearch(e){
     this.search_text=e.detail.event.value
   },
   search() {
     var that=this
+    that.loading=true
     that.result_list=[]
-    that.isloading=true
+    that.loading=true
     fetch.fetch({
-      url:'http://10.0.1.34:8086/price/get-list-by-name',
+      url:'http://'+this.$app.$def.dataApp.ip+':8086/price/get-list-by-name',
       responseType: 'json',
       header:{
         'content-type':'application/json'
@@ -110,6 +115,7 @@ export default {
       },
       complete: function(response){
         that.isloading=false
+        that.loading=false
       }
     })
   }

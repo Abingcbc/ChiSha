@@ -14,31 +14,31 @@
         <block if={{isLogin}}>
         <div class="recommend_container">
           <div ontouchend="gotoDetail(recommends[0])" class="recommend_item">
-            <image class="recommend_image" alt="/Common/404.jpeg" src="{{recommends[0].url}}"></image>
+            <image class="recommend_image" alt="/Common/loading.gif" src="{{recommends[0].url}}"></image>
             <text style="text-align:center;">{{recommends[0].name}}</text>   
           </div>   
           <div ontouchend="gotoDetail(recommends[1])" class="recommend_item">
-            <image class="recommend_image" alt="/Common/404.jpeg" src="{{recommends[1].url}}"></image>
+            <image class="recommend_image" alt="/Common/loading.gif" src="{{recommends[1].url}}"></image>
             <text style="text-align:center;">{{recommends[1].name}}</text>  
           </div>
         </div>
         <div class="recommend_container">
           <div ontouchend="gotoDetail(recommends[2])" class="recommend_item">
-            <image class="recommend_image" alt="/Common/404.jpeg" src="{{recommends[2].url}}"></image>
+            <image class="recommend_image" alt="/Common/loading.gif" src="{{recommends[2].url}}"></image>
             <text style="text-align:center;">{{recommends[2].name}}</text>   
           </div>   
           <div ontouchend="gotoDetail(recommends[3])" class="recommend_item">
-            <image class="recommend_image" alt="/Common/404.jpeg" src="{{recommends[3].url}}"></image>
+            <image class="recommend_image" alt="/Common/loading.gif" src="{{recommends[3].url}}"></image>
             <text style="text-align:center;">{{recommends[3].name}}</text>  
           </div>
         </div>
         <div class="recommend_container">
           <div ontouchend="gotoDetail(recommends[4])" class="recommend_item">
-            <image class="recommend_image" alt="/Common/404.jpeg" src="{{recommends[4].url}}"></image>
+            <image class="recommend_image" alt="/Common/loading.gif" src="{{recommends[4].url}}"></image>
             <text style="text-align:center;">{{recommends[4].name}}</text>   
           </div>   
           <div ontouchend="gotoDetail(recommends[5])" class="recommend_item">
-            <image class="recommend_image" alt="/Common/404.jpeg" src="{{recommends[5].url}}"></image>
+            <image class="recommend_image" alt="/Common/loading.gif" src="{{recommends[5].url}}"></image>
             <text style="text-align:center;">{{recommends[5].name}}</text>  
           </div>
         </div>
@@ -177,7 +177,7 @@ export default {
           that.userId=data
           console.log(that.isLogin)
           fetch.fetch({
-            url:'http://10.0.1.34:8002/recommend/'+that.userId,
+            url:'http://'+that.$app.$def.dataApp.ip+':8002/recommend/'+that.userId,
             responseType: 'json',
             success: function(response) {
               console.log(response.data)

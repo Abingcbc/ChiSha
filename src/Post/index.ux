@@ -2,7 +2,7 @@
 <import name="my-toast" src="apex-ui/components/toast/index"></import>
 <template>
   <div class="page">
-    <image class="title_image" alt="/Common/404.jpeg" src="{{info.url}}"></image>
+    <image class="title_image" alt="/Common/loading.gif" src="{{info.url}}"></image>
     <text class="title_text">{{info.title}}</text>
     <text class="subtitle_text">商品描述：</text>
     <text class="content">{{info.description}}</text>
@@ -73,7 +73,7 @@ export default{
   onInit() {
     var that=this
     fetch.fetch({
-      url:'http://10.0.1.34:8087/post/get-post/'+that.id,
+      url:'http://'+this.$app.$def.dataApp.ip+':8087/post/get-post/'+that.id,
       responseType: 'json',
       success: function(response) {
         console.log(response.data)
@@ -86,7 +86,7 @@ export default{
     })
     if(that.isLogin==='true'){
       fetch.fetch({
-        url:'http://10.0.1.34:8087/like/check?user-id='+String(that.userId)+'&&post-id='+String(that.id),
+        url:'http://'+this.$app.$def.dataApp.ip+':8087/like/check?user-id='+String(that.userId)+'&&post-id='+String(that.id),
         success: function(response){
           console.log(response)
           if(response.data==="false"){
@@ -111,7 +111,7 @@ export default{
     if(that.isLogin==='true'){
       if(this.like_status){
         fetch.fetch({
-          url:'http://10.0.1.34:8087/like/unlike-post?user-id='+String(that.userId)+'&&post-id='+String(that.id),
+          url:'http://'+this.$app.$def.dataApp.ip+':8087/like/unlike-post?user-id='+String(that.userId)+'&&post-id='+String(that.id),
           success: function(response){
             console.log(response)
             that.like_status=false
@@ -121,7 +121,7 @@ export default{
         })
       }else{
         fetch.fetch({
-          url:'http://10.0.1.34:8087/like/like-post?user-id='+String(that.userId)+'&&post-id='+String(that.id),
+          url:'http://'+this.$app.$def.dataApp.ip+':8087/like/like-post?user-id='+String(that.userId)+'&&post-id='+String(that.id),
           success: function(response){
             console.log(response)
             that.like_status=true

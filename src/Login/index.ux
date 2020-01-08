@@ -4,7 +4,9 @@
 <template>
     <div class="page">
         <div class="input_block">
+            <text show={{username_show}} class="warning">{{username_text}}</text>
             <my-input onchange="bindPhone" title="账号" type="number" placeholder="手机号"></my-input>
+            <text show={{password_show}} class="warning">{{password_text}}</text>
             <my-input onchange="bindPassword" type="password" title="密码" placeholder="密码"></my-input>       
         </div>
         <my-button ontap="login" type="success">登陆</my-button>
@@ -30,6 +32,12 @@
       padding: 20px;
       justify-content: space-between;
   }
+  .warning {
+    margin-left:20px; 
+    margin-top:15px;
+    margin-bottom: 10px;
+    color: #ed3f14;
+  }
 </style>
 <script>
 import router from '@system.router'
@@ -37,8 +45,12 @@ import fetch from '@system.fetch'
 import storage from '@system.storage'
 export default {
   private: {
-    phone_number: 0,
-    password: ''
+    phone_number: '',
+    password: '',
+    username_show: false,
+    password_show: false,
+    username_text: '',
+    password_text: ''
   },
   gotoRegiste(){
     router.push({
@@ -55,8 +67,22 @@ export default {
     var that=this
     console.log(that.phone_number)
     console.log(that.password)
+    var flag=false
+    if(that.phone_number===''){
+      flag=true
+      that.username_show=true
+      that.username_text='手机号不能为空'
+    }
+    if(that.password===''){
+      flag=true
+      that.password_show=true
+      that.password_text='密码不能为空'
+    }
+    if(flag){
+      return
+    }
     fetch.fetch({
-      url:'http://10.0.1.34:8001/login',
+      url:'http://'+this.$app.$def.dataApp.ip+':8001/login',
       method: 'Post',
       responseType: 'json',
       header:{
@@ -88,6 +114,9 @@ export default {
             type: 'error'
           })
         }
+      },
+      complete: function(){
+        console.log('yes')
       }
     })
 

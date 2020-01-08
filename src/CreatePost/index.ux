@@ -16,7 +16,7 @@
       </div>
       <text style="margin-left:20px; margin-top:15px;">商品图片</text>
       <div>
-      <image ontouchend="uploadImage" class="upload" src="{{url}}"></image>
+      <image ontouchend="uploadImage" class="upload" alt="/Common/loading.gif" src="{{url}}"></image>
       <div if="{{isuploaded}}" ontouchend="delete" class="close">
       </div>
       </div>
@@ -62,7 +62,12 @@
     width: 100%;
     height: 200px;
   }
-
+  .warning {
+    margin-left:20px; 
+    margin-top:15px;
+    margin-bottom: 10px;
+    color: #ed3f14;
+  }
 </style>
 <script>
 import media from '@system.media'
@@ -99,20 +104,36 @@ export default{
     media.pickImage({
       success: function(data) {
         console.log(data)
-        that.url=data.uri
-        that.image=data.uri
         that.isuploaded=true
+        that.url='/Common/loading.gif'
         request.upload({
           url: 'https://sm.ms/api/v2/upload',
           files:[{
-            uri: that.url,
+            uri: data.uri,
             name: 'smfile',
             filename: 'smfile.jpg'
           }],
           success: function(response){
-            console.log(response)
+            var jsonObject=JSON.parse(response.data)
+            console.log(typeof(jsonObject.success))
+            if(jsonObject.success)
+            {
+              console.log('success')
+              that.url=jsonObject.data.url
+              that.image=jsonObject.data.url
+            }else if(jsonObject.code==='image_repeated'){
+              that.url=jsonObject.images
+              that.image=jsonObject.images
+            }else{
+              that.url='/Common/404.jpeg'
+            }
+          },
+          fail: function(){
+            that.url='/Common/404.jpeg'
           }
         })
+      },
+      fail: function(){
       }
     })
   },
@@ -121,7 +142,7 @@ export default{
     console.log('upload')
     console.log(that.image)
     fetch.fetch({
-      url:'http://10.0.1.34:8087/post/publish',
+      url:'http://'+this.$app.$def.dataApp.ip+':8087/post/publish',
       header:{
         'content-type':'application/json'
       },
@@ -130,7 +151,7 @@ export default{
         'title': that.title,
         'content':that.description,
         'contact':that.contact,
-        'postImage':''
+        'postImage':that.image
       },
       method: 'POST',
       success: function(response){

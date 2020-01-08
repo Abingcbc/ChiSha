@@ -155,7 +155,7 @@ export default {
       });
     }
     fetch.fetch({
-      url:'http://10.0.1.34:8001/register',
+      url:'http://'+this.$app.$def.dataApp.ip+':8001/register',
       method: 'Post',
       responseType: 'json',
       header:{

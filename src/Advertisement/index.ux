@@ -4,6 +4,7 @@
 <import name="my-icon" src="apex-ui/components/icon/index"></import>
 <import name="my-fab-button" src="apex-ui/components/fab-button/index"></import>
 <import name="my-button" src="apex-ui/components/button/index"></import>
+<import name="my-spin" src="apex-ui/components/spin/index"></import>
 
 <template>
   <!-- template里只能有一个根节点 -->
@@ -12,11 +13,12 @@
     <div ontouchend="gotoSearch">
       <my-search-bar disabled="{{true}}" input-value="{{search_text}}" onchange="searchInput" placeholder="搜索产品名"></my-search-bar>
     </div>
+    <my-spin loading="{{loading}}"></my-spin>
     <list class="tutorial-page" onscrollbottom="loadMoreData">
       <block for="{{advertisement_list}}">
         <list-item type="card" class="tutorial-page">
           <div ontouchend="gotoPost($item)" class="card">
-            <image class="detail_image" alt="/Common/404.jpeg" src="{{$item.postImage}}"></image>
+            <image class="detail_image" alt="/Common/loading.gif" src="{{$item.postImage}}"></image>
             <div class="detail">
               <text>{{$item.title}}</text>
               <div class="auth_info">
@@ -84,10 +86,12 @@ export default {
     isLogin: false,
     page: 0,
     maxPage: 0,
-    userId: 0
+    userId: 0,
+    loading: true
   },
   onShow() {
     var that=this
+    that.loading=true
     that.advertisement_list=[]
     storage.get({
       key:'id',
@@ -105,6 +109,8 @@ export default {
       },
       fail: function(data,code){
         console.log(data,code)
+      },
+      complete: function(){
       }
     })
     fetch.fetch({
@@ -117,6 +123,9 @@ export default {
         }
         that.page=response.data.pageNum
         that.maxPage=response.data.pages
+      },
+      complete: function(){
+        that.loading=false
       }
     })
   },

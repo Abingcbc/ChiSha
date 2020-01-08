@@ -3,6 +3,7 @@
 <import name="my-search-bar" src="apex-ui/components/search-bar/index"></import>
 <import name="my-card" src="apex-ui/components/card/index"></import>
 <import name="my-divider" src="apex-ui/components/divider/index"></import>
+<import name="my-spin" src="apex-ui/components/spin/index"></import>
 
 <template>
   <!-- template里只能有一个根节点 -->
@@ -11,6 +12,7 @@
     <div ontouchend="gotoSearch">
       <my-search-bar disabled="{{true}}" input-value="{{search_text}}" onchange="searchInput" placeholder="搜索食材名"></my-search-bar>
     </div>
+    <my-spin loading="{{loading}}"></my-spin>
     <list class="tutorial-page" onscrollbottom="loadMoreData">
       <block for="{{ingredient_list}}">
         <list-item type="card" class="tutorial-page">
@@ -41,7 +43,7 @@
           </div>
         </block>    
       </list-item>
-    </list>
+    </list>  
     <my-tabbar tabbar="{{tabbarData}}"></my-tabbar>
     </div>
 </template>
@@ -80,12 +82,14 @@ export default {
     isFixed:false,
     loadAll:false,
     page:0,
-    maxPage:0
+    maxPage:0,
+    loading: false
   },
   onInit() {
     var that=this
+    that.loading=true
     fetch.fetch({
-      url:'http://10.0.1.34:8086/price/get-list?page-num=1&&page-size=4',
+      url:'http://'+this.$app.$def.dataApp.ip+':8086/price/get-list?page-num=1&&page-size=4',
       responseType: 'json',
       success: function(response){
         for(var index in response.data.list){
@@ -93,6 +97,9 @@ export default {
         }
         that.page=response.data.pageNum
         that.maxPage=response.data.pages
+      },
+      complete: function(){
+        that.loading=false
       }
     })
     
@@ -127,7 +134,7 @@ export default {
     var newPage=that.page+1
     console.log('load')
     fetch.fetch({
-      url:'http://10.0.1.34:8086/price/get-list?page-num='+String(newPage)+'&&page-size=4',
+      url:'http://'+this.$app.$def.dataApp.ip+':8086/price/get-list?page-num='+String(newPage)+'&&page-size=4',
       responseType: 'json',
       success: function(response){
         for(var index in response.data.list){
